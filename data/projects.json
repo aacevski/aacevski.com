@@ -1,0 +1,16 @@
+{
+  "projects": [
+    {
+      "title": "Andrej's Tunes",
+      "description": "A website to check your Spotify statistics based on your listening history.",
+      "preview": "https://i.imgur.com/EOfP9a0.mp4",
+      "url": "http://andrejs-tunes.herokuapp.com/"
+    },
+    {
+      "title": "Covid World",
+      "description": "Get the newest statistics about Covid-19.",
+      "preview": "https://i.imgur.com/jvjTe2U.mp4",
+      "url": "https://aacevski.github.io/Covid-World/"
+    }
+  ]
+}
