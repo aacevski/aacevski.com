@@ -20,8 +20,6 @@ const backgrounds = [
 
 export const BookmarkCard = ({
   title,
-  cover,
-  tags,
   excerpt,
   link,
   index,

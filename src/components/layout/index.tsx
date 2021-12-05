@@ -4,7 +4,7 @@ import { useAnimation, motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 
 import { Header } from '../header';
-// import { Footer } from '../footer';
+import { Footer } from '../footer';
 import { Divider } from '../divider';
 import { startAnimation } from '../../utils/constants';
 
@@ -50,7 +50,7 @@ export const Layout = ({ children }: Props) => {
           </motion.div>
         </VStack>
         <Divider />
-        {/* <Footer /> */}
+        <Footer />
       </VStack>
     </Container>
   );
