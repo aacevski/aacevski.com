@@ -7,8 +7,8 @@ import {
   AspectRatio,
 } from '@chakra-ui/react';
 
-import { Project } from '../../types/project';
 import Image from 'src/components/image';
+import { Project } from 'src/types/project';
 
 export const ProjectCard = ({ title, description, preview, url }: Project) => {
   return (
@@ -20,9 +20,14 @@ export const ProjectCard = ({ title, description, preview, url }: Project) => {
         </Heading>
         <VStack w="full" justifyContent="center" />
         <LinkOverlay href={url} isExternal>
-          <AspectRatio ratio={16 / 9} w="full">
-            <Image src={preview} alt={title} />
-          </AspectRatio>
+          <Image
+            width={1920}
+            height={1080}
+            src={preview}
+            alt={title}
+            priority
+            rounded="lg"
+          />
         </LinkOverlay>
       </VStack>
     </LinkBox>

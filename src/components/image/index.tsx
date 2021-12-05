@@ -1,5 +1,9 @@
 import NextImage, { ImageProps as NextImageProps } from 'next/image';
-import { chakra, ImageProps as ChakraImageProps } from '@chakra-ui/react';
+import {
+  chakra,
+  ImageProps as ChakraImageProps,
+  useBreakpointValue,
+} from '@chakra-ui/react';
 
 type Props = NextImageProps & Omit<ChakraImageProps, 'src'>;
 
