@@ -29,7 +29,7 @@ const IndexPage = ({ projects }: Props) => {
     <VStack w="full" spacing={16}>
       <VStack spacing={8}>
         <VStack spacing={6}>
-          <Avatar src="./images/andrej.jpg" alignSelf="flex-start" size="lg" />
+          <Avatar src="./images/andrej.jpg" alignSelf="flex-start" size="md" />
           <Heading>
             Hi, I’m Andrej. I’m a{' '}
             <Box

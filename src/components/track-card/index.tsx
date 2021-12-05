@@ -1,11 +1,11 @@
 import {
   HStack,
   Text,
-  Image,
   useColorModeValue as mode,
   VStack,
 } from '@chakra-ui/react';
 
+import Image from 'src/components/image';
 import { Track } from 'src/types/track';
 
 export const TrackCard = ({ ranking, image, title, artist }: Track) => {

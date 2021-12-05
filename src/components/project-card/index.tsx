@@ -1,7 +1,14 @@
 import React from 'react';
-import { VStack, Heading, Box, LinkBox, LinkOverlay } from '@chakra-ui/react';
+import {
+  VStack,
+  Heading,
+  LinkBox,
+  LinkOverlay,
+  AspectRatio,
+} from '@chakra-ui/react';
 
 import { Project } from '../../types/project';
+import Image from 'src/components/image';
 
 export const ProjectCard = ({ title, description, preview, url }: Project) => {
   return (
@@ -13,17 +20,9 @@ export const ProjectCard = ({ title, description, preview, url }: Project) => {
         </Heading>
         <VStack w="full" justifyContent="center" />
         <LinkOverlay href={url} isExternal>
-          <Box
-            as="video"
-            w="full"
-            rounded="3xl"
-            playsInline
-            autoPlay
-            muted
-            loop
-          >
-            <source src={preview} type="video/mp4" />
-          </Box>
+          <AspectRatio ratio={16 / 9} w="full">
+            <Image src={preview} alt={title} />
+          </AspectRatio>
         </LinkOverlay>
       </VStack>
     </LinkBox>
