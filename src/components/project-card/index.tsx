@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  VStack,
-  Heading,
-  LinkBox,
-  LinkOverlay,
-  AspectRatio,
-} from '@chakra-ui/react';
+import { VStack, Heading, LinkBox, LinkOverlay } from '@chakra-ui/react';
 
 import Image from 'src/components/image';
 import { Project } from 'src/types/project';

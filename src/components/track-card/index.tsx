@@ -3,6 +3,7 @@ import {
   Text,
   useColorModeValue as mode,
   VStack,
+  chakra,
 } from '@chakra-ui/react';
 
 import Image from 'src/components/image';
@@ -12,23 +13,25 @@ export const TrackCard = ({ ranking, image, title, artist }: Track) => {
   return (
     <HStack
       w="full"
-      spacing={6}
+      spacing={{ base: 6, md: 6 }}
       py={4}
       _hover={{ bg: mode('blackAlpha.100', 'blackAlpha.500') }}
     >
-      <Text fontSize="sm" color="#7e7e7e" fontWeight="bold" ml={4}>
+      <Text fontSize="sm" color="#7e7e7e" fontWeight="bold">
         {ranking}
       </Text>
-      <Image
-        src={image}
-        w="50px"
-        objectFit="cover"
-        h="64px"
-        rounded="md"
-        mr={4}
-        alt={title}
-      />
-      <VStack align="flex-start" spacing={0}>
+      <chakra.span flexShrink={0}>
+        <Image
+          src={image}
+          width={50}
+          height={64}
+          objectFit="cover"
+          rounded="md"
+          alt={title}
+        />
+      </chakra.span>
+
+      <VStack align="flex-start">
         <Text fontSize="lg" fontWeight="bold">
           {title}
         </Text>
