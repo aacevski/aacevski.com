@@ -85,31 +85,6 @@ const About = () => {
                   mt={4}
                   textAlign="justify"
                 >
-                  Outside of work, I’m a student at the{' '}
-                  <Link
-                    href="https://www.finki.ukim.mk/en"
-                    color={mode('black', 'white')}
-                  >
-                    Faculty of Computer Science and Engineering
-                  </Link>{' '}
-                  and I’m a member of the student organization{' '}
-                  <Link
-                    color={mode('black', 'white')}
-                    href="https://eestec.mk/"
-                  >
-                    EESTEC
-                  </Link>
-                  . I’ve attented a number of events organized by EESTEC and the
-                  faculty I’m attending, regarding various technologies.
-                </Heading>
-                <Heading
-                  as="h3"
-                  fontSize="lg"
-                  color="gray"
-                  fontWeight="medium"
-                  mt={4}
-                  textAlign="justify"
-                >
                   In my free time, I love to take photos of amazing views and
                   visit new places. On top of all that, like every tech nerd, I
                   love to learn more about technology - even outside of my
