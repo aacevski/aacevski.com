@@ -4,7 +4,7 @@ export const navItems = [
 ] as const;
 
 export const socials = [
-  { platform: "twitter", url: "https://twitter.com/aacevski" },
-  { platform: "youtube", url: "https://youtube.com/@aacevski1" },
-  { platform: "github", url: "https://github.com/aacevski" },
+  { platform: "Twitter", url: "https://twitter.com/aacevski" },
+  { platform: "Youtube", url: "https://youtube.com/@aacevski1" },
+  { platform: "Github", url: "https://github.com/aacevski" },
 ] as const;

@@ -1,6 +1,6 @@
 ---
 interface Props {
-  platform: 'twitter' | 'youtube' | 'github';
+  platform: 'Twitter' | 'Youtube' | 'Github';
   url: string;
 }
 
@@ -19,5 +19,5 @@ const icons = {
   class="text-gray-400 hover:text-blue-400 transition-colors"
   aria-label={`Visit ${platform}`}
 >
-  <Fragment set:html={icons[platform]} />
+  <Fragment set:html={icons[platform as 'twitter' | 'youtube' | 'github']} />
 </a>

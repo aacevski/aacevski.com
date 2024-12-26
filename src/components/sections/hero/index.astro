@@ -4,7 +4,7 @@ import Avatar from './avatar.astro';
 import HeroButton from './hero-button.astro';
 ---
 
-<section class="relative min-h-[40vh] flex items-center">
+<section class="relative min-h-[40vh] flex items-center max-w-7xl mx-auto px-4">
   <GradientBlob position="top-left" />
   <GradientBlob position="bottom-right" />
   
@@ -27,16 +27,16 @@ import HeroButton from './hero-button.astro';
           Software engineer at <a href="https://codechem.com" class="text-blue-400 hover:text-blue-300 transition-colors">CodeChem</a>, 
           building developer tools and contributing to open source. Focused on creating intuitive and powerful solutions.
         </p>
-      </div>
-    </div>
 
-    <div class="flex flex-col sm:flex-row gap-4 md:ml-40">
-      <HeroButton href="/blog">
-        Read my blog
-      </HeroButton>
-      <HeroButton href="https://github.com/aacevski" variant="secondary" external>
-        View my work
-      </HeroButton>
+        <div class="flex flex-col md:flex-row gap-4">
+          <HeroButton href="/blog">
+            Read my blog
+          </HeroButton>
+          <HeroButton href="https://github.com/aacevski" variant="secondary" external>
+            View my work
+          </HeroButton>
+        </div>
+      </div>
     </div>
   </div>
 </section>
