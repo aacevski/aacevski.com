@@ -8,17 +8,17 @@ const currentPath = Astro.url.pathname;
 ---
 
 <nav class="fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-4xl bg-black/40 backdrop-blur-lg z-50 rounded-2xl border border-white/10 shadow-lg shadow-black/20">
-  <div class="px-4 sm:px-6 py-4">
+  <div class="px-3 sm:px-6 py-4">
     <div class="flex items-center justify-between">
       <Logo />
       
-      <div class="hidden sm:flex items-center gap-8">
-        <div class="flex gap-8">
+      <div class="hidden sm:flex items-center gap-4 lg:gap-8">
+        <div class="flex gap-4 lg:gap-8">
           {navItems.map(item => (
             <a 
               href={item.href} 
               class:list={[
-                "font-medium transition-colors relative group",
+                "font-medium transition-colors relative group text-sm lg:text-base whitespace-nowrap",
                 currentPath === item.href ? "text-blue-400" : "text-gray-300 hover:text-blue-400"
               ]}
             >
@@ -27,7 +27,7 @@ const currentPath = Astro.url.pathname;
             </a>
           ))}
         </div>
-        <div class="flex items-center gap-4 pl-8 border-l border-white/10">
+        <div class="flex items-center gap-3 lg:gap-4 pl-4 lg:pl-8 border-l border-white/10">
           {socials.map(social => (
             <SocialIcon {...social} />
           ))}
@@ -48,14 +48,3 @@ const currentPath = Astro.url.pathname;
 
   <MobileMenu currentPath={currentPath} />
 </nav>
-
-<script>
-  const button = document.getElementById('mobile-menu-button');
-  const menu = document.getElementById('mobile-menu');
-
-  button?.addEventListener('click', () => {
-    menu?.classList.toggle('translate-y-2');
-    menu?.classList.toggle('opacity-0');
-    menu?.classList.toggle('pointer-events-none');
-  });
-</script>
