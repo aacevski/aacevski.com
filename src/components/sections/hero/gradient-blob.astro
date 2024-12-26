@@ -1,0 +1,18 @@
+---
+interface Props {
+  position: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+}
+
+const { position } = Astro.props;
+
+const positionClasses = {
+  'top-left': '-top-40 -left-40',
+  'top-right': '-top-40 -right-40',
+  'bottom-left': '-bottom-40 -left-40',
+  'bottom-right': '-bottom-40 -right-40'
+};
+---
+
+<div class={`absolute ${positionClasses[position]} w-96 h-96 bg-blue-500/20 rounded-full blur-3xl`}>
+  <div class="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/30 to-blue-500/0 animate-pulse"></div>
+</div>

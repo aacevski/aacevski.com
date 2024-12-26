@@ -1,0 +1,49 @@
+---
+import SocialIcon from './header/social-icon.astro';
+
+const socials = [
+  { platform: 'twitter', url: 'https://twitter.com/andrejacevski' },
+  { platform: 'youtube', url: 'https://youtube.com/@andrejacevski' },
+  { platform: 'github', url: 'https://github.com/ace03uec' },
+] as const;
+
+const links = [
+  { label: 'Home', href: '/' },
+  { label: 'Writing', href: '/blog' },
+  { label: 'About', href: '/about' },
+];
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="border-t border-white/10 bg-black/20 backdrop-blur-lg mt-24">
+  <div class="max-w-4xl mx-auto px-6 py-12">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+      <div class="flex flex-col items-center md:items-start gap-4">
+        <p class="text-sm text-gray-400">
+          © {currentYear} Andrej Acevski. All rights reserved.
+        </p>
+        <div class="flex gap-4">
+          {socials.map(social => (
+            <SocialIcon {...social} />
+          ))}
+        </div>
+      </div>
+      
+      <nav>
+        <ul class="flex gap-8">
+          {links.map(link => (
+            <li>
+              <a 
+                href={link.href}
+                class="text-sm text-gray-400 hover:text-blue-400 transition-colors"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </div>
+</footer>

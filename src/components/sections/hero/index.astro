@@ -1,0 +1,42 @@
+---
+import GradientBlob from './gradient-blob.astro';
+import Avatar from './avatar.astro';
+import HeroButton from './hero-button.astro';
+---
+
+<section class="relative min-h-[40vh] flex items-center">
+  <GradientBlob position="top-left" />
+  <GradientBlob position="bottom-right" />
+  
+  <div class="relative space-y-6">
+    <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+      <Avatar 
+        src="https://aacevski.com/andrej.webp" 
+        alt="Andrej Acevski"
+        size="lg"
+      />
+      
+      <div class="space-y-4 text-center md:text-left">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold font-mono">
+          <span class="bg-gradient-to-r from-white via-white to-gray-500 bg-clip-text text-transparent">
+            Andrej Acevski
+          </span>
+        </h1>
+
+        <p class="text-lg text-gray-400 leading-relaxed max-w-2xl">
+          Software engineer at <a href="https://codechem.com" class="text-blue-400 hover:text-blue-300 transition-colors">CodeChem</a>, 
+          building developer tools and contributing to open source. Focused on creating intuitive and powerful solutions.
+        </p>
+      </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-4 md:ml-40">
+      <HeroButton href="/blog">
+        Read my blog
+      </HeroButton>
+      <HeroButton href="https://github.com/aacevski" variant="secondary" external>
+        View my work
+      </HeroButton>
+    </div>
+  </div>
+</section>
