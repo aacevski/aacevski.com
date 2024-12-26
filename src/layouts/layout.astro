@@ -15,8 +15,11 @@ const { title, description = "Andrej Acevski's personal website and blog" } = As
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
-    <meta name="viewport" content="width=device-width" />
+    <meta name='viewport' content='width=device-width,initial-scale=1' />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel='me' href='https://twitter.com/aacevski' />
+    <link rel='me' href='https://github.com/aacevski' />
+    <link rel='alternate' type='application/rss+xml' title='RSS' href='feed.xml' />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
