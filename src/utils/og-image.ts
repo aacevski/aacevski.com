@@ -10,7 +10,7 @@ export function createOGImage({ title, description }: OGImageProps) {
       style: {
         height: '100%',
         width: '100%',
-        display: 'flex',
+        display: 'flex', // Ensures proper layout handling
         alignItems: 'center',
         backgroundColor: '#0a0a0a',
         padding: 80,
@@ -23,6 +23,9 @@ export function createOGImage({ title, description }: OGImageProps) {
             style: {
               height: 160,
               width: 160,
+              display: 'flex', // Added display
+              alignItems: 'center',
+              justifyContent: 'center',
               borderRadius: 48,
               marginRight: 56,
               background: 'linear-gradient(to top right, #2563eb, #60a5fa)',
@@ -50,7 +53,7 @@ export function createOGImage({ title, description }: OGImageProps) {
           type: 'div',
           props: {
             style: {
-              display: 'flex',
+              display: 'flex', // Added display
               flexDirection: 'column',
               gap: 24,
             },
