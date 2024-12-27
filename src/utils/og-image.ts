@@ -37,8 +37,8 @@ export function createOGImage({ title, description }: OGImageProps) {
                 props: {
                   src: 'https://aacevski.com/andrej.webp',
                   style: {
-                    height: 160,
-                    width: 160,
+                    height: '100%',
+                    width: '100%',
                     objectFit: 'cover',
                     borderRadius: 44,
                   },
