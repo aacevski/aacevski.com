@@ -2,23 +2,23 @@
 import Logo from './logo.astro';
 import SocialIcon from './social-icon.astro';
 import { navItems, socials } from '../../config/navigation';
-import MobileMenu from './mobile-menu.astro';
 
 const currentPath = Astro.url.pathname;
 ---
 
 <nav class="fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-4xl bg-black/40 backdrop-blur-lg z-50 rounded-2xl border border-white/10 shadow-lg shadow-black/20">
-  <div class="px-3 sm:px-6 py-4">
+  <div class="px-4 sm:px-6 py-4">
     <div class="flex items-center justify-between">
       <Logo />
       
-      <div class="hidden sm:flex items-center gap-4 lg:gap-8">
-        <div class="flex gap-4 lg:gap-8">
+      <!-- Desktop Navigation -->
+      <div class="hidden sm:flex items-center gap-8">
+        <div class="flex gap-8">
           {navItems.map(item => (
             <a 
               href={item.href} 
               class:list={[
-                "font-medium transition-colors relative group text-sm lg:text-base whitespace-nowrap",
+                "font-medium transition-colors relative group",
                 currentPath === item.href ? "text-blue-400" : "text-gray-300 hover:text-blue-400"
               ]}
             >
@@ -27,24 +27,33 @@ const currentPath = Astro.url.pathname;
             </a>
           ))}
         </div>
-        <div class="flex items-center gap-3 lg:gap-4 pl-4 lg:pl-8 border-l border-white/10">
+        <div class="flex items-center gap-4 pl-8 border-l border-white/10">
           {socials.map(social => (
             <SocialIcon {...social} />
           ))}
         </div>
       </div>
 
-      <button 
-        id="mobile-menu-button"
-        class="sm:hidden p-2 text-gray-400 hover:text-blue-400 transition-colors"
-        aria-label="Toggle menu"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
+      <!-- Mobile Navigation -->
+      <div class="flex sm:hidden items-center">
+        <a
+          href="/blog"
+          class:list={[
+            "p-2 rounded-lg transition-colors",
+            currentPath === '/blog' ? "text-blue-400 bg-blue-500/10" : "text-gray-300 hover:text-blue-400 hover:bg-white/5"
+          ]}
+          aria-label="Writing"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd" />
+          </svg>
+        </a>
+        <div class="flex items-center gap-3 ml-4 pl-4 border-l border-white/10">
+          {socials.map(social => (
+            <SocialIcon {...social} />
+          ))}
+        </div>
+      </div>
     </div>
   </div>
-
-  <MobileMenu currentPath={currentPath} />
 </nav>
