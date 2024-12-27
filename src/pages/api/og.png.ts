@@ -1,11 +1,21 @@
 import type { APIRoute } from 'astro';
 import satori from 'satori';
 import sharp from 'sharp';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 export const GET: APIRoute = async ({ url }) => {
   const { searchParams } = url;
   const title = searchParams.get('title') || 'Andrej Acevski';
   const description = searchParams.get('description') || 'Software Developer';
+
+  // Load fonts from local files
+  const interRegular = readFileSync(
+    join(process.cwd(), 'public', 'fonts', 'Inter-Regular.ttf')
+  );
+  const jetBrainsMono = readFileSync(
+    join(process.cwd(), 'public', 'fonts', 'JetBrainsMono-Bold.ttf')
+  );
 
   const svg = await satori(
     {
@@ -70,19 +80,15 @@ export const GET: APIRoute = async ({ url }) => {
       height: 630,
       fonts: [
         {
-          name: 'JetBrains Mono',
-          data: await fetch(
-            'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&display=swap'
-          ).then((res) => res.arrayBuffer()),
-          weight: 700,
+          name: 'Inter',
+          data: interRegular,
+          weight: 400,
           style: 'normal',
         },
         {
-          name: 'Inter',
-          data: await fetch(
-            'https://fonts.googleapis.com/css2?family=Inter&display=swap'
-          ).then((res) => res.arrayBuffer()),
-          weight: 400,
+          name: 'JetBrains Mono',
+          data: jetBrainsMono,
+          weight: 700,
           style: 'normal',
         },
       ],
