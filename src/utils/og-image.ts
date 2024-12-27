@@ -34,8 +34,8 @@ interface OGImageProps {
                   props: {
                     src: 'https://aacevski.com/andrej.webp',
                     style: {
-                      height: '100%',
-                      width: '100%',
+                      height: 160,
+                      width: 160,
                       objectFit: 'cover',
                       borderRadius: 44,
                     },
