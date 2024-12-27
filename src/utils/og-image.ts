@@ -1,16 +1,17 @@
 interface OGImageProps {
   title: string;
   description: string;
+  avatarImage: string;
 }
 
-export function createOGImage({ title, description }: OGImageProps) {
+export function createOGImage({ title, description, avatarImage }: OGImageProps) {
   return {
     type: 'div',
     props: {
       style: {
         height: '100%',
         width: '100%',
-        display: 'flex', // Ensures proper layout handling
+        display: 'flex',
         alignItems: 'center',
         backgroundColor: '#0a0a0a',
         padding: 80,
@@ -23,7 +24,7 @@ export function createOGImage({ title, description }: OGImageProps) {
             style: {
               height: 160,
               width: 160,
-              display: 'flex', // Added display
+              display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               borderRadius: 48,
@@ -35,15 +36,15 @@ export function createOGImage({ title, description }: OGImageProps) {
               {
                 type: 'img',
                 props: {
-                  src: 'https://aacevski.com/andrej.webp',
+                  src: avatarImage,
                   style: {
                     height: '100%',
                     width: '100%',
                     objectFit: 'cover',
                     borderRadius: 44,
                   },
-                  width: 160, // Explicit width
-                  height: 160, // Explicit height
+                  width: 160,
+                  height: 160,
                 },
               },
             ],
@@ -53,7 +54,7 @@ export function createOGImage({ title, description }: OGImageProps) {
           type: 'div',
           props: {
             style: {
-              display: 'flex', // Added display
+              display: 'flex',
               flexDirection: 'column',
               gap: 24,
             },
