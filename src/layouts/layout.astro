@@ -37,7 +37,8 @@ const ogImage = new URL(
     <title>{title}</title>
     <link
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
     <link href="https://fonts.gstatic.com" rel="preconnect" />
 
