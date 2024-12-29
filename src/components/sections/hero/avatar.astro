@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import andrej from "../../../assets/andrej.png";
 
 interface Props {
   src: string;
@@ -21,10 +22,9 @@ const sizes = {
     class={`${sizes[size]} rounded-3xl bg-gradient-to-tr from-blue-600 to-blue-400 p-1`}
   >
     <Image
-      src="https://aacevski.com/andrej.png"
+      src={andrej}
       alt={alt}
       class="w-full h-full object-cover rounded-[22px]"
-      inferSize
     />
   </div>
   <div
