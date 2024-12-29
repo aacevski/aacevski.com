@@ -1,6 +1,5 @@
 export const navItems = [
   { label: "Writing", href: "/blog" },
-  { label: "About", href: "/about" },
 ] as const;
 
 export const socials = [
