@@ -1,32 +1,32 @@
 ---
-import ProjectCard from './project-card.astro';
+import ProjectCard from "./project-card.astro";
 
 const projects = [
   {
-    title: 'unwrapit.me',
-    description: 'A platform for unwrapping and sharing Spotify Wrapped all year round.',
-    url: 'https://unwrapit.me',
-    tags: ['Next.js', 'TypeScript', 'Spotify API']
+    title: "unwrapit.me",
+    description:
+      "A platform for unwrapping and sharing Spotify Wrapped all year round.",
+    url: "https://unwrapit.vercel.app",
+    tags: ["Next.js", "TypeScript", "Spotify API"],
   },
   {
-    title: 'bukefal-os',
-    description: 'A minimal Linux distribution built for developers.',
-    url: '#',
-    tags: ['Linux', 'Shell', 'C']
+    title: "bukefal-os",
+    description: "A minimal Linux distribution built for developers.",
+    url: "https://github.com/aacevski/bukefal-os",
+    tags: ["Linux", "Shell", "C"],
   },
   {
-    title: 'go-tify',
-    description: 'Go library for interacting with the Spotify Web API.',
-    url: '#',
-    tags: ['Go', 'API']
-  }
+    title: "go-tify",
+    description: "Go library for interacting with the Spotify Web API.",
+    url: "https://github.com/aacevski/aacevski/go-tify",
+    tags: ["Go", "API"],
+  },
 ];
 ---
+
 <section id="projects" class="space-y-6">
   <h2 class="text-2xl font-semibold font-mono">Featured Projects</h2>
   <div class="grid gap-4">
-    {projects.map(project => (
-      <ProjectCard {...project} />
-    ))}
+    {projects.map((project) => <ProjectCard {...project} />)}
   </div>
 </section>

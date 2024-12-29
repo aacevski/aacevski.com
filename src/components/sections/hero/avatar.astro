@@ -2,25 +2,30 @@
 interface Props {
   src: string;
   alt: string;
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
 }
 
-const { alt, size = 'md' } = Astro.props;
+const { alt, size = "md" } = Astro.props;
 
 const sizes = {
-  sm: 'w-24 h-24',
-  md: 'w-32 h-32',
-  lg: 'w-40 h-40'
+  sm: "w-24 h-24",
+  md: "w-32 h-32",
+  lg: "w-40 h-40",
 };
 ---
 
 <div class="relative group">
-  <div class={`${sizes[size]} rounded-3xl bg-gradient-to-tr from-blue-600 to-blue-400 p-1`}>
-    <img 
-      src='/andrej.png' 
+  <div
+    class={`${sizes[size]} rounded-3xl bg-gradient-to-tr from-blue-600 to-blue-400 p-1`}
+  >
+    <img
+      src="/andrej.png"
       alt={alt}
       class="w-full h-full object-cover rounded-[22px]"
     />
   </div>
-  <div class="absolute inset-0 rounded-3xl bg-gradient-to-tr from-blue-600 to-blue-400 opacity-0 blur-xl group-hover:opacity-40 transition-opacity duration-500"></div>
+  <div
+    class="absolute inset-0 rounded-3xl bg-gradient-to-tr from-blue-600 to-blue-400 opacity-0 blur-xl group-hover:opacity-40 transition-opacity duration-500"
+  >
+  </div>
 </div>

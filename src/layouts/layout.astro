@@ -1,14 +1,18 @@
 ---
-import Navigation from '../components/header/navigation.astro';
-import { ClientRouter } from 'astro:transitions';
+import Navigation from "../components/header/navigation.astro";
+import { ClientRouter } from "astro:transitions";
 
 interface Props {
   title: string;
   description?: string;
 }
 
-const { title, description = "Andrej Acevski's personal website and blog" } = Astro.props;
-const ogImage = new URL(`/api/og.png?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`, Astro.url);
+const { title, description = "Andrej Acevski's personal website and blog" } =
+  Astro.props;
+const ogImage = new URL(
+  `/api/og.png?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`,
+  Astro.url
+);
 ---
 
 <!doctype html>
@@ -16,21 +20,36 @@ const ogImage = new URL(`/api/og.png?title=${encodeURIComponent(title)}&descript
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
-    <meta name='viewport' content='width=device-width,initial-scale=1' />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel='me' href='https://twitter.com/aacevski' />
-    <link rel='me' href='https://github.com/aacevski' />
-    <link rel='alternate' type='application/rss+xml' title='RSS' href='feed.xml' />
+    <link rel="me" href="https://twitter.com/aacevski" />
+    <link rel="me" href="https://github.com/aacevski" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="RSS"
+      href="feed.xml"
+    />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-     <meta property="og:type" content="website" />
-     <meta property="og:title" content={title} />
-     <meta property="og:description" content={description} />
-     <meta property="og:image" content={ogImage} />
-     <meta property="twitter:card" content="summary_large_image" />
-     <meta property="twitter:image" content={ogImage} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:image" content={ogImage} />
+
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Andrej Acevski" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <ClientRouter />
   </head>

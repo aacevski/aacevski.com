@@ -1,67 +1,79 @@
 ---
-import Layout from './layout.astro';
-import TableOfContents from '../components/blog/table-of-contents.astro';
-import LikeButton from '../components/blog/like-button.astro';
-import ViewCounter from '../components/blog/view-counter.astro';
-import { formatDate } from '../utils/date';
+import Layout from "./layout.astro";
+import TableOfContents from "../components/blog/table-of-contents.astro";
+import LikeButton from "../components/blog/like-button.astro";
+import ViewCounter from "../components/blog/view-counter.astro";
+import { formatDate } from "../utils/date";
 
 const { frontmatter, headings } = Astro.props;
 ---
 
 <Layout title={`${frontmatter.title}`}>
-    <div class="relative max-w-4xl mx-auto px-6 py-16">
-      <TableOfContents headings={headings} />
-      
-      <article class="prose prose-invert prose-blue max-w-none">
-        <header class="not-prose mb-16 space-y-4">
-          <div class="flex items-center gap-4 text-sm text-gray-500">
-            <time datetime={frontmatter.date}>
-              {formatDate(frontmatter.date)}
-            </time>
-            <span>•</span>
-            <ViewCounter />
-          </div>
-          <h1 class="text-4xl font-bold font-mono bg-gradient-to-r from-white to-gray-500 bg-clip-text text-transparent">
-            {frontmatter.title}
-          </h1>
-          {frontmatter.description && (
+  <div class="relative max-w-4xl mx-auto px-6 py-16">
+    <TableOfContents headings={headings} />
+
+    <article class="prose prose-invert prose-blue max-w-none">
+      <header class="not-prose mb-16 space-y-4">
+        <div class="flex items-center gap-4 text-sm text-gray-500">
+          <time datetime={frontmatter.date}>
+            {formatDate(frontmatter.date)}
+          </time>
+          <span>•</span>
+          <ViewCounter />
+        </div>
+        <h1
+          class="text-4xl font-bold font-mono bg-gradient-to-r from-white to-gray-500 bg-clip-text text-transparent"
+        >
+          {frontmatter.title}
+        </h1>
+        {
+          frontmatter.description && (
             <p class="text-xl text-gray-400 leading-relaxed">
               {frontmatter.description}
             </p>
-          )}
-          <div class="pt-4">
-            <LikeButton />
-          </div>
-        </header>
-        
-        <div class="relative">
-          <slot />
+          )
+        }
+        <div class="pt-4">
+          <LikeButton />
         </div>
-      </article>
-      
-      <div class="fixed bottom-8 right-8">
-        <a 
-          href="#top" 
-          class="flex items-center justify-center w-10 h-10 bg-white/5 hover:bg-white/10 backdrop-blur-lg rounded-full border border-white/10 text-gray-400 hover:text-blue-400 transition-colors"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
-          </svg>
-        </a>
+      </header>
+
+      <div class="relative">
+        <slot />
       </div>
+    </article>
+
+    <div class="fixed bottom-8 right-8">
+      <a
+        href="#top"
+        class="flex items-center justify-center w-10 h-10 bg-white/5 hover:bg-white/10 backdrop-blur-lg rounded-full border border-white/10 text-gray-400 hover:text-blue-400 transition-colors"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
+            clip-rule="evenodd"></path>
+        </svg>
+      </a>
     </div>
-  </Layout>
-  
-  <style>
-    :global(.prose pre) {
-      @apply bg-white/5 border border-white/10 rounded-xl !important;
-    }
-    
-    :global(.prose code) {
-      @apply bg-white/5 px-1.5 py-0.5 rounded-md border border-white/10 !important;
-    }
-    
-    :global(.prose pre code) {
-      @apply bg-transparent border-none p-0 !important;
-    }
-  </style>
+  </div>
+</Layout>
+
+<style>
+  :global(.prose pre) {
+    @apply bg-white/5 border border-white/10 rounded-xl !important;
+  }
+
+  :global(.prose code) {
+    @apply bg-white/5 px-1.5 py-0.5 rounded-md border border-white/10 !important;
+  }
+
+  :global(.prose pre code) {
+    @apply bg-transparent border-none p-0 !important;
+  }
+</style>

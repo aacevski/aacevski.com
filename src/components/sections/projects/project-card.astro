@@ -9,20 +9,40 @@ interface Props {
 const { title, description, url, tags = [] } = Astro.props;
 ---
 
-<a href={url} target="_blank" rel="noopener noreferrer" 
-  class="group block p-6 bg-black/20 rounded-lg border border-white/10 hover:border-blue-500/50 transition-all duration-300">
+<a
+  href={url}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="group block p-6 bg-black/20 rounded-lg border border-white/10 hover:border-blue-500/50 transition-all duration-300"
+>
   <div class="flex items-center justify-between mb-4">
-    <h3 class="text-lg font-medium text-white group-hover:text-blue-400 transition-colors">{title}</h3>
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 group-hover:text-blue-400 transition-colors" viewBox="0 0 20 20" fill="currentColor">
-      <path fill-rule="evenodd" d="M5.293 6.707a1 1 0 010-1.414l8-8a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4zM2 2a2 2 0 012-2h4a1 1 0 010 2H4v4a1 1 0 01-2 0V2z" clip-rule="evenodd" />
+    <h3
+      class="text-lg font-medium text-white group-hover:text-blue-400 transition-colors"
+    >
+      {title}
+    </h3>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-5 w-5 text-gray-400 group-hover:text-blue-400 transition-colors"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M5.293 6.707a1 1 0 010-1.414l8-8a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4zM2 2a2 2 0 012-2h4a1 1 0 010 2H4v4a1 1 0 01-2 0V2z"
+        clip-rule="evenodd"></path>
     </svg>
   </div>
   <p class="text-gray-400 mb-4">{description}</p>
-  {tags.length > 0 && (
-    <div class="flex gap-2 flex-wrap">
-      {tags.map(tag => (
-        <span class="px-2 py-1 text-xs bg-white/5 text-gray-400 rounded-full">{tag}</span>
-      ))}
-    </div>
-  )}
+  {
+    tags.length > 0 && (
+      <div class="flex gap-2 flex-wrap">
+        {tags.map((tag) => (
+          <span class="px-2 py-1 text-xs bg-white/5 text-gray-400 rounded-full">
+            {tag}
+          </span>
+        ))}
+      </div>
+    )
+  }
 </a>

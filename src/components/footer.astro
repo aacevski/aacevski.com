@@ -1,16 +1,16 @@
 ---
-import SocialIcon from './header/social-icon.astro';
+import SocialIcon from "./header/social-icon.astro";
 
 const socials = [
-  { platform: 'twitter', url: 'https://twitter.com/aacevski' },
-  { platform: 'youtube', url: 'https://youtube.com/@aacevski1' },
-  { platform: 'github', url: 'https://github.com/aacevski' },
+  { platform: "Twitter", url: "https://twitter.com/aacevski" },
+  { platform: "Youtube", url: "https://youtube.com/@aacevski1" },
+  { platform: "Github", url: "https://github.com/aacevski" },
 ] as const;
 
 const links = [
-  { label: 'Home', href: '/' },
-  { label: 'Writing', href: '/blog' },
-  { label: 'About', href: '/about' },
+  { label: "Home", href: "/" },
+  { label: "Writing", href: "/blog" },
+  { label: "About", href: "/about" },
 ];
 
 const currentYear = new Date().getFullYear();
@@ -24,24 +24,24 @@ const currentYear = new Date().getFullYear();
           © {currentYear} Andrej Acevski. All rights reserved.
         </p>
         <div class="flex gap-4">
-          {socials.map(social => (
-            <SocialIcon {...social} />
-          ))}
+          {socials.map((social) => <SocialIcon {...social} />)}
         </div>
       </div>
-      
+
       <nav>
         <ul class="flex gap-8">
-          {links.map(link => (
-            <li>
-              <a 
-                href={link.href}
-                class="text-sm text-gray-400 hover:text-blue-400 transition-colors"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
+          {
+            links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="text-sm text-gray-400 hover:text-blue-400 transition-colors"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
         </ul>
       </nav>
     </div>
