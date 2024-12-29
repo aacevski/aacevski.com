@@ -1,0 +1,46 @@
+---
+import Layout from "../layouts/layout.astro";
+import TechStack from "../components/colophon/tech-stack.astro";
+import Typography from "../components/colophon/typography.astro";
+import ColorSystem from "../components/colophon/color-system.astro";
+import FontDisplay from "../components/colophon/font-display.astro";
+---
+
+<Layout title="Colophon - Andrej Acevski">
+  <div class="max-w-3xl mx-auto px-6 py-16">
+    <header class="mb-16">
+      <h1
+        class="text-4xl font-bold font-mono bg-gradient-to-r from-white to-gray-500 bg-clip-text text-transparent mb-4"
+      >
+        Colophon
+      </h1>
+      <p class="text-xl text-gray-400">
+        A detailed look at the tools and technologies used to build this
+        website.
+      </p>
+    </header>
+
+    <div class="space-y-16">
+      <FontDisplay />
+      <ColorSystem />
+      <TechStack />
+      <Typography />
+
+      <div class="space-y-8">
+        <h2 class="text-2xl font-semibold font-mono">Open Source</h2>
+        <p class="text-gray-400">
+          This website is open source and available on{" "}
+          <a
+            href="https://github.com/ace03uec/portfolio"
+            class="text-blue-400 hover:text-blue-300 transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>. Feel free to explore the code and use it as inspiration for your
+          own projects.
+        </p>
+      </div>
+    </div>
+  </div>
+</Layout>
