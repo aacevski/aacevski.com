@@ -1,19 +1,17 @@
 import type { APIRoute } from "astro";
 import satori from "satori";
 import sharp from "sharp";
-import { createOGImage } from "../../utils/og-image";
 import { loadFonts } from "../../utils/fonts";
-import { loadAvatarImage } from "../../utils/image";
+import { createCoverImage } from "../../utils/cover-image";
 
 export const GET: APIRoute = async ({ url }) => {
   const { searchParams } = url;
-  const title = searchParams.get("title") || "Andrej Acevski";
-  const description = searchParams.get("description") || "Software Developer";
-  const avatarImage = loadAvatarImage();
+  const width = Number(searchParams.get("width")) || 1200;
+  const height = Number(searchParams.get("height")) || 630;
 
-  const svg = await satori(createOGImage({ title, description, avatarImage }), {
-    width: 1200,
-    height: 630,
+  const svg = await satori(createCoverImage(), {
+    width,
+    height,
     fonts: loadFonts(),
   });
 
