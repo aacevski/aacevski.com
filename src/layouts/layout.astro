@@ -2,6 +2,7 @@
 import Footer from "../components/footer.astro";
 import Navigation from "../components/header/navigation.astro";
 import Analytics from "@vercel/analytics/astro";
+import SpeedInsights from "@vercel/speed-insights/astro";
 import { ClientRouter } from "astro:transitions";
 
 interface Props {
@@ -55,6 +56,7 @@ const ogImage = new URL(
 
     <ClientRouter />
     <Analytics />
+    <SpeedInsights />
   </head>
   <body class="bg-[#0a0a0a] text-gray-100 min-h-screen font-['Inter']">
     <Navigation />
