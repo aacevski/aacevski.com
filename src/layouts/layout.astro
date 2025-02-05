@@ -1,9 +1,10 @@
 ---
-import Footer from "../components/footer.astro";
-import Navigation from "../components/header/navigation.astro";
+import { ClientRouter } from "astro:transitions";
 import Analytics from "@vercel/analytics/astro";
 import SpeedInsights from "@vercel/speed-insights/astro";
-import { ClientRouter } from "astro:transitions";
+import Footer from "../components/footer.astro";
+import Navigation from "../components/header/navigation.astro";
+import "../styles/global.css";
 
 interface Props {
   title: string;
@@ -14,7 +15,7 @@ const { title, description = "Andrej Acevski's personal website and blog" } =
   Astro.props;
 const ogImage = new URL(
   `/api/og.png?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`,
-  Astro.url
+  Astro.url,
 );
 ---
 
@@ -57,11 +58,11 @@ const ogImage = new URL(
     <meta name="apple-mobile-web-app-title" content="Andrej Acevski" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <ClientRouter />
+    <ClientRouter fallback="swap" />
     <Analytics />
     <SpeedInsights />
   </head>
-  <body class="bg-[#0a0a0a] text-gray-100 min-h-screen font-['Inter']">
+  <body class="bg-[#0a0a0a] text-gray-100 min-h-screen">
     <Navigation />
     <main class="pt-28 overflow-x-hidden">
       <slot />

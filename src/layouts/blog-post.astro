@@ -1,26 +1,25 @@
 ---
-import Layout from "./layout.astro";
+import type { CollectionEntry } from "astro:content";
+import PostMetadata from "../components/blog/post-metadata.astro";
 import TableOfContents from "../components/blog/table-of-contents.astro";
-import LikeButton from "../components/blog/like-button.astro";
-import ViewCounter from "../components/blog/view-counter.astro";
 import { formatDate } from "../utils/date";
+import { getReadingTime } from "../utils/reading-time";
+import Layout from "./layout.astro";
 
-const { frontmatter, headings } = Astro.props;
+const { frontmatter, headings, readingTime } = Astro.props;
 ---
 
 <Layout title={`${frontmatter.title}`}>
-  <div class="relative max-w-4xl mx-auto px-6 py-16">
+  <div class="relative max-w-4xl mx-auto px-6 py-16 page-transition">
     <TableOfContents headings={headings} />
 
     <article class="prose prose-invert prose-blue max-w-none">
       <header class="not-prose mb-16 space-y-4">
-        <div class="flex items-center gap-4 text-sm text-gray-500">
-          <time datetime={frontmatter.date}>
-            {formatDate(frontmatter.date)}
-          </time>
-          <span>•</span>
-          <ViewCounter />
-        </div>
+        <PostMetadata
+          date={formatDate(frontmatter.date)}
+          readingTime={readingTime}
+          category={frontmatter.category}
+        />
         <h1
           class="text-4xl font-bold font-mono bg-gradient-to-r from-white to-gray-500 bg-clip-text text-transparent"
         >
@@ -33,9 +32,6 @@ const { frontmatter, headings } = Astro.props;
             </p>
           )
         }
-        <div class="pt-4">
-          <LikeButton />
-        </div>
       </header>
 
       <div class="relative">
@@ -63,17 +59,3 @@ const { frontmatter, headings } = Astro.props;
     </div>
   </div>
 </Layout>
-
-<style>
-  :global(.prose pre) {
-    @apply bg-white/5 border border-white/10 rounded-xl !important;
-  }
-
-  :global(.prose code) {
-    @apply bg-white/5 px-1.5 py-0.5 rounded-md border border-white/10 !important;
-  }
-
-  :global(.prose pre code) {
-    @apply bg-transparent border-none p-0 !important;
-  }
-</style>

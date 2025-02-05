@@ -1,19 +1,21 @@
 ---
-import { getCollection, type CollectionEntry } from 'astro:content'
-import Layout from '../../layouts/layout.astro';
-import { formatDate } from '../../utils/date';
+import { type CollectionEntry, getCollection } from "astro:content";
+import Layout from "../../layouts/layout.astro";
+import { formatDate } from "../../utils/date";
 
-const posts: CollectionEntry<'blog'>[] = await getCollection('blog')
+const posts: CollectionEntry<"blog">[] = await getCollection("blog");
 
-const sortedPosts = posts.sort((a, b) => 
-  new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+const sortedPosts = posts.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
 );
 ---
 
 <Layout title="Blog">
-  <div class="max-w-3xl mx-auto px-6 py-16">
+  <div class="max-w-3xl mx-auto px-6 py-16 page-transition">
     <header class="mb-16">
-      <h1 class="text-4xl font-bold font-mono bg-gradient-to-r from-white to-gray-500 bg-clip-text text-transparent mb-4">
+      <h1
+        class="text-4xl font-bold font-mono bg-gradient-to-r from-white to-gray-500 bg-clip-text text-transparent mb-4"
+      >
         Writing
       </h1>
       <p class="text-xl text-gray-400">
@@ -22,27 +24,41 @@ const sortedPosts = posts.sort((a, b) =>
     </header>
 
     <div class="space-y-12">
-      {sortedPosts.map((post) => (
-        <article class="group">
-          <a href={`/blog/${post.slug}`} class="block space-y-4">
-            <time datetime={post.data.date.toString()} class="text-sm text-gray-500">
-              {formatDate(post.data.date.toString())}
-            </time>
-            <h2 class="text-2xl font-semibold text-white group-hover:text-blue-400 transition-colors">
-              {post.data.title}
-            </h2>
-            <p class="text-gray-400 leading-relaxed">
-              {post.data.description}
-            </p>
-            <span class="inline-flex items-center text-sm text-blue-400 group-hover:text-blue-300 transition-colors">
-              Read more
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-              </svg>
-            </span>
-          </a>
-        </article>
-      ))}
+      {
+        sortedPosts.map((post) => (
+          <article class="group">
+            <a href={`/blog/${post.slug}`} class="block space-y-4">
+              <time
+                datetime={post.data.date.toString()}
+                class="text-sm text-gray-500"
+              >
+                {formatDate(post.data.date.toString())}
+              </time>
+              <h2 class="text-2xl font-semibold text-white group-hover:text-blue-400 transition-colors">
+                {post.data.title}
+              </h2>
+              <p class="text-gray-400 leading-relaxed">
+                {post.data.description}
+              </p>
+              <span class="inline-flex items-center text-sm text-blue-400 group-hover:text-blue-300 transition-colors">
+                Read more
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4 ml-1"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </span>
+            </a>
+          </article>
+        ))
+      }
     </div>
   </div>
 </Layout>

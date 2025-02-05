@@ -1,22 +1,29 @@
 ---
-import BlogPostLayout from '../../layouts/blog-post.astro';
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { type CollectionEntry, getCollection } from "astro:content";
+import BlogPostLayout from "../../layouts/blog-post.astro";
+import { getReadingTime } from "../../utils/reading-time";
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog')
+  const posts = await getCollection("blog");
   return posts.map((post) => ({
     params: { slug: post.slug },
     props: post,
-  }))
+  }));
 }
-type Props = CollectionEntry<'blog'>
+type Props = CollectionEntry<"blog">;
 
 const post = Astro.props;
-const { Content, headings } = await post.render()
+const { Content, headings } = await post.render();
+
+const readingTime = getReadingTime(post.body);
 
 export const prerender = true;
 ---
 
-<BlogPostLayout frontmatter={post.data} headings={headings}>
- <Content />
+<BlogPostLayout
+  frontmatter={post.data}
+  headings={headings}
+  readingTime={readingTime}
+>
+  <Content />
 </BlogPostLayout>
