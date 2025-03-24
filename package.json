@@ -11,10 +11,10 @@
 	"dependencies": {
 		"@astrojs/mdx": "^4.2.0",
 		"@astrojs/rss": "^4.0.11",
-		"@astrojs/sitemap": "^3.2.1",
+		"@astrojs/sitemap": "^3.3.0",
 		"@astrojs/vercel": "^8.1.2",
 		"@tailwindcss/typography": "^0.5.16",
-		"@tailwindcss/vite": "^4.0.9",
+		"@tailwindcss/vite": "^4.0.15",
 		"@vercel/analytics": "^1.5.0",
 		"@vercel/speed-insights": "^1.2.0",
 		"astro": "^5.5.4",
@@ -23,6 +23,6 @@
 		"reading-time": "^1.5.0",
 		"satori": "^0.12.1",
 		"sharp": "^0.33.5",
-		"tailwindcss": "^4.0.14"
+		"tailwindcss": "^4.0.15"
 	}
 }
