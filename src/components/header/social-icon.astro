@@ -15,9 +15,9 @@ const icons = {
 
 <a
   href={url}
-  target="_blank"
-  rel="noopener noreferrer"
-  class="text-gray-400 hover:text-blue-400 transition-colors"
+  target='_blank'
+  rel='noopener noreferrer'
+  class='text-gray-400 hover:text-blue-400 transition-colors'
   aria-label={`Visit ${platform}`}
 >
   <Fragment set:html={icons[platform as "Twitter" | "Youtube" | "Github"]} />

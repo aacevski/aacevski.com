@@ -21,13 +21,13 @@ const variants = {
   class={`${baseStyles} ${variants[variant]}`}
   {...external ? { target: "_blank", rel: "noopener noreferrer" } : {}}
 >
-  <div class="bg absolute inset-0 rounded-lg"></div>
-  <div class="border absolute inset-0 rounded-lg"></div>
+  <div class='bg absolute inset-0 rounded-lg'></div>
+  <div class='border absolute inset-0 rounded-lg'></div>
   <div
-    class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+    class='absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity'
   >
   </div>
-  <span class="relative">
+  <span class='relative'>
     <slot />
   </span>
 </a>

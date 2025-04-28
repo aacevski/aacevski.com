@@ -16,10 +16,10 @@ const icons = {
 ---
 
 <div
-  id="mobile-menu"
-  class="sm:hidden absolute top-full left-0 right-0 p-4 bg-black/40 backdrop-blur-lg rounded-xl border border-white/10 shadow-lg shadow-black/20 translate-y-2 opacity-0 pointer-events-none transition-all duration-200"
+  id='mobile-menu'
+  class='sm:hidden absolute top-full left-0 right-0 p-4 bg-black/40 backdrop-blur-lg rounded-xl border border-white/10 shadow-lg shadow-black/20 translate-y-2 opacity-0 pointer-events-none transition-all duration-200'
 >
-  <div class="grid grid-cols-2 gap-2">
+  <div class='grid grid-cols-2 gap-2'>
     {
       navItems.map((item) => (
         <a
@@ -40,9 +40,9 @@ const icons = {
       socials.map((social) => (
         <a
           href={social.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="flex items-center gap-2 p-3 rounded-lg text-gray-300 hover:bg-white/5 transition-colors"
+          target='_blank'
+          rel='noopener noreferrer'
+          class='flex items-center gap-2 p-3 rounded-lg text-gray-300 hover:bg-white/5 transition-colors'
         >
           <Fragment set:html={icons[social.platform as "Writing"]} />
           {social.platform}

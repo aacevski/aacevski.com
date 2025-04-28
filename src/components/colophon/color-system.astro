@@ -21,17 +21,17 @@ const colors = [
 ];
 ---
 
-<div class="space-y-8">
-  <h2 class="text-2xl font-semibold font-mono">Colors</h2>
-  <div class="grid gap-4">
+<div class='space-y-8'>
+  <h2 class='text-2xl font-semibold font-mono'>Colors</h2>
+  <div class='grid gap-4'>
     {
       colors.map((color) => (
-        <div class="p-6 bg-white/5 rounded-lg border border-white/10">
+        <div class='p-6 bg-white/5 rounded-lg border border-white/10'>
           <div class={`h-16 ${color.class} rounded-lg mb-4`} />
-          <div class="space-y-2">
-            <h3 class="text-lg font-medium text-white">{color.name}</h3>
-            <p class="text-gray-400">{color.usage}</p>
-            <p class="font-mono text-sm text-gray-500">{color.value}</p>
+          <div class='space-y-2'>
+            <h3 class='text-lg font-medium text-white'>{color.name}</h3>
+            <p class='text-gray-400'>{color.usage}</p>
+            <p class='font-mono text-sm text-gray-500'>{color.value}</p>
           </div>
         </div>
       ))

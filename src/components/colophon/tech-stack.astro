@@ -32,45 +32,45 @@ const categoryColors = {
 } as const;
 ---
 
-<div class="space-y-8">
-  <h2 class="text-2xl font-semibold font-mono">Technology Stack</h2>
-  <div class="grid gap-4">
+<div class='space-y-8'>
+  <h2 class='text-2xl font-semibold font-mono'>Technology Stack</h2>
+  <div class='grid gap-4'>
     {
       technologies.map((tech) => (
         <a
           href={tech.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="group relative block p-6 bg-gradient-to-br border border-white/10 rounded-lg overflow-hidden transition-all duration-300 hover:border-white/20"
+          target='_blank'
+          rel='noopener noreferrer'
+          class='group relative block p-6 bg-gradient-to-br border border-white/10 rounded-lg overflow-hidden transition-all duration-300 hover:border-white/20'
           class:list={[categoryColors[tech.category]]}
         >
-          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500" />
+          <div class='absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500' />
 
-          <div class="relative flex items-start gap-4">
-            <div class="shrink-0 p-2 bg-white/10 rounded-lg">
+          <div class='relative flex items-start gap-4'>
+            <div class='shrink-0 p-2 bg-white/10 rounded-lg'>
               <svg
-                class="w-6 h-6 text-white"
-                viewBox="0 0 24 24"
-                fill="currentColor"
+                class='w-6 h-6 text-white'
+                viewBox='0 0 24 24'
+                fill='currentColor'
               >
                 <Fragment set:html={tech.icon} />
               </svg>
             </div>
 
             <div>
-              <div class="flex items-center gap-2 mb-2">
-                <h3 class="text-lg font-medium text-white group-hover:text-blue-400 transition-colors">
+              <div class='flex items-center gap-2 mb-2'>
+                <h3 class='text-lg font-medium text-white group-hover:text-blue-400 transition-colors'>
                   {tech.name}
                 </h3>
                 <svg
-                  class="w-4 h-4 text-gray-500 group-hover:text-blue-400 transition-colors"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
+                  class='w-4 h-4 text-gray-500 group-hover:text-blue-400 transition-colors'
+                  viewBox='0 0 20 20'
+                  fill='currentColor'
                 >
-                  <path d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z" />
+                  <path d='M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z' />
                 </svg>
               </div>
-              <p class="text-gray-400">{tech.description}</p>
+              <p class='text-gray-400'>{tech.description}</p>
             </div>
           </div>
         </a>

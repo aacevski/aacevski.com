@@ -8,41 +8,41 @@ interface Props {
 const { date, readingTime, category } = Astro.props;
 ---
 
-<div class="flex flex-wrap items-center gap-4 text-sm">
-    <div class="inline-flex items-center gap-2 text-gray-500">
+<div class='flex flex-wrap items-center gap-4 text-sm'>
+    <div class='inline-flex items-center gap-2 text-gray-500'>
         <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5"
-            viewBox="0 0 20 20"
-            fill="currentColor"
+            xmlns='http://www.w3.org/2000/svg'
+            class='h-5 w-5'
+            viewBox='0 0 20 20'
+            fill='currentColor'
         >
             <path
-                fill-rule="evenodd"
-                d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                clip-rule="evenodd"></path>
+                fill-rule='evenodd'
+                d='M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z'
+                clip-rule='evenodd'></path>
         </svg>
         <time datetime={date}>{date}</time>
     </div>
 
-    <div class="inline-flex items-center gap-2 text-gray-500">
+    <div class='inline-flex items-center gap-2 text-gray-500'>
         <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5"
-            viewBox="0 0 20 20"
-            fill="currentColor"
+            xmlns='http://www.w3.org/2000/svg'
+            class='h-5 w-5'
+            viewBox='0 0 20 20'
+            fill='currentColor'
         >
             <path
-                fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                clip-rule="evenodd"></path>
+                fill-rule='evenodd'
+                d='M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z'
+                clip-rule='evenodd'></path>
         </svg>
         <span>{readingTime}</span>
     </div>
 
     {
         category && (
-            <div class="inline-flex items-center gap-2">
-                <span class="px-3 py-1 text-xs text-blue-400 bg-blue-500/10 rounded-full">
+            <div class='inline-flex items-center gap-2'>
+                <span class='px-3 py-1 text-xs text-blue-400 bg-blue-500/10 rounded-full'>
                     {category}
                 </span>
             </div>
@@ -50,12 +50,12 @@ const { date, readingTime, category } = Astro.props;
     }
 
     <div
-        class="fixed top-0 left-0 w-full h-1 bg-white/5"
-        transition:persist="progress"
+        class='fixed top-0 left-0 w-full h-1 bg-white/5'
+        transition:persist='progress'
     >
         <div
-            id="reading-progress"
-            class="h-full bg-blue-500 w-0 transition-all duration-150 top-0"
+            id='reading-progress'
+            class='h-full bg-blue-500 w-0 transition-all duration-150 top-0'
         >
         </div>
     </div>

@@ -10,18 +10,18 @@ interface Props {
 const { headings } = Astro.props;
 ---
 
-<div class="fixed right-8 top-32 w-64 hidden xl:block">
+<div class='fixed right-8 top-32 w-64 hidden xl:block'>
   <div
-    class="bg-white/5 rounded-xl p-6 backdrop-blur-lg border border-white/10"
+    class='bg-white/5 rounded-xl p-6 backdrop-blur-lg border border-white/10'
   >
-    <h2 class="text-sm font-semibold text-gray-400 mb-4">ON THIS PAGE</h2>
-    <ul class="space-y-3">
+    <h2 class='text-sm font-semibold text-gray-400 mb-4'>ON THIS PAGE</h2>
+    <ul class='space-y-3'>
       {
         headings.map((heading) => (
           <li style={`padding-left: ${(heading.depth - 1) * 1}rem`}>
             <a
               href={`#${heading.slug}`}
-              class="text-sm text-gray-400 hover:text-blue-400 transition-colors block"
+              class='text-sm text-gray-400 hover:text-blue-400 transition-colors block'
             >
               {heading.text}
             </a>

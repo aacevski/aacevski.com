@@ -15,20 +15,20 @@ const fonts = [
 ];
 ---
 
-<div class="space-y-8">
-  <h2 class="text-2xl font-semibold font-mono">Typography</h2>
-  <div class="grid gap-4">
+<div class='space-y-8'>
+  <h2 class='text-2xl font-semibold font-mono'>Typography</h2>
+  <div class='grid gap-4'>
     {
       fonts.map((font) => (
         <a
           href={font.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="block p-6 bg-white/5 rounded-lg border border-white/10 hover:border-blue-500/50 transition-all duration-300"
+          target='_blank'
+          rel='noopener noreferrer'
+          class='block p-6 bg-white/5 rounded-lg border border-white/10 hover:border-blue-500/50 transition-all duration-300'
         >
-          <h3 class="text-lg font-medium text-white mb-2">{font.name}</h3>
-          <p class="text-gray-400 mb-1">{font.usage}</p>
-          <p class="text-sm text-gray-500">Designed by {font.designer}</p>
+          <h3 class='text-lg font-medium text-white mb-2'>{font.name}</h3>
+          <p class='text-gray-400 mb-1'>{font.usage}</p>
+          <p class='text-sm text-gray-500'>Designed by {font.designer}</p>
         </a>
       ))
     }
