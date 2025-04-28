@@ -21,7 +21,7 @@
 		"mdast-util-from-markdown": "^2.0.2",
 		"mdast-util-to-string": "^4.0.0",
 		"reading-time": "^1.5.0",
-		"satori": "^0.12.1",
+		"satori": "^0.12.2",
 		"sharp": "^0.33.5",
 		"tailwindcss": "^4.0.15"
 	}
