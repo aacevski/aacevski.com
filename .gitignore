@@ -1,0 +1,6 @@
+tmp/
+dist/
+*.log
+.DS_Store
+cmd/build/build
+

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>{{.Name}} ~ breaking code, building tools</title>
+    <meta name="description" content="{{.Name}} - eng @ codechem. building kaneo (2.4k+ stars). breaking things, shipping code, making dev tools that don't suck. skopje, mk.">
+    <meta name="keywords" content="Andrej Acevski, aacevski, software engineer, hacker, CodeChem, Kaneo, open source, FCSE, developer tools, Go, TypeScript, Skopje, Macedonia">
+    <meta name="author" content="{{.Name}}">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://aacevski.com/">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aacevski.com/">
+    <meta property="og:title" content="{{.Name}} ~ breaking code, building tools">
+    <meta property="og:description" content="eng @ codechem. building kaneo. making dev tools that don't suck.">
+    <meta property="og:site_name" content="{{.Nickname}}">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:url" content="https://aacevski.com/">
+    <meta name="twitter:title" content="{{.Name}} ~ breaking code, building tools">
+    <meta name="twitter:description" content="eng @ codechem. building kaneo. making dev tools that don't suck.">
+    
+    <link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body>
+    <div class="body-content">
+        <header class="header-container" style="max-width: 760px; width: 100%; margin: 0 auto; padding: calc(var(--widget-gap) * 1.5) var(--content-bounds-padding) var(--widget-gap) var(--content-bounds-padding);">
+            <nav style="background: var(--color-widget-background); border-radius: var(--border-radius); border: 1px solid var(--color-widget-content-border); padding: 0.8rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 2rem;">
+                    <a href="/" class="nav-item nav-item-current">home</a>
+                    <a href="/blog" class="nav-item">blog</a>
+                    <a href="/books" class="nav-item">books</a>
+                    <a href="/rss" class="nav-item">rss</a>
+                </div>
+                <button id="cmd-k-trigger" aria-label="Search" style="background: transparent; color: var(--color-text-base); display: inline-flex; align-items: center; gap: 0.4rem; padding: 0; cursor: pointer; border: none; transition: color 0.3s; line-height: 1;">
+                    <span style="font-size: var(--font-size-h5);">⌘</span>
+                    <kbd style="font-size: var(--font-size-h6); padding: 0.2rem 0.5rem; margin: 0; border: 1px solid var(--color-widget-content-border); background: var(--color-background); border-radius: 3px; box-shadow: none; font-family: inherit; line-height: 1; color: var(--color-text-base);">K</kbd>
+                </button>
+            </nav>
+        </header>
+
+        <main class="page content-ready">
+            <div class="page-content" style="max-width: 760px; width: 100%; margin: 0 auto; padding: 0 var(--content-bounds-padding);">
+                
+                <section style="padding: calc(var(--widget-gap) * 1.5) 0 calc(var(--widget-gap) * 2) 0; display: grid; grid-template-columns: auto 1fr; gap: calc(var(--widget-gap) * 2.5); align-items: start;">
+                    {{if .AsciiArt}}
+                    <pre style="color: var(--color-text-subdue); font-size: 0.7rem; line-height: 1.2; white-space: pre; user-select: none; opacity: 0.6; filter: invert(1);">{{.AsciiArt}}</pre>
+                    {{end}}
+                    <div>
+                        <h1 style="font-size: clamp(2rem, 5vw, 3rem); color: var(--color-negative); line-height: 1.1; margin-bottom: 2rem; font-style: italic; animation: slideIn 0.6s ease-out;">
+                            {{.Nickname}}
+                        </h1>
+                        <p style="color: var(--color-text-base); margin-bottom: 0.5rem;">{{.Location}}</p>
+                        <p style="color: var(--color-text-base); margin-bottom: 1.5rem;">{{.Role}}</p>
+                        {{if .Status}}
+                        <p style="color: var(--color-text-subdue); margin-bottom: 2rem;">
+                            <span class="status-indicator" style="display: inline-block; width: 8px; height: 8px; background: var(--color-primary); border-radius: 50%; margin-right: 0.5rem; animation: pulse 2s infinite;"></span>
+                            {{.Status}}
+                        </p>
+                        {{end}}
+                        <p style="color: var(--color-text-paragraph); line-height: 1.8; margin-bottom: 1.5rem;">
+                            {{.Bio}}
+                        </p>
+                    {{if .CurrentlyReading}}
+                    <p style="color: var(--color-text-base);">
+                        currently reading: <em style="color: var(--color-text-subdue);">{{.CurrentlyReading}}</em>
+                        <span style="color: var(--color-text-subdue); margin: 0 0.5rem;">·</span>
+                        <a href="/books" style="color: var(--color-primary); text-decoration: none;">more</a>
+                    </p>
+                    {{end}}
+                    </div>
+                </section>
+
+                <section style="padding: calc(var(--widget-gap) * 2) 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: calc(var(--widget-gap) * 3);">
+                    
+                    <div>
+                        <h2 style="font-size: var(--font-size-h2); color: var(--color-primary); margin-bottom: calc(var(--widget-gap) * 1.5);">
+                            work
+                        </h2>
+                        {{range .Work}}
+                        <article style="margin-bottom: calc(var(--widget-gap) * 1.5);">
+                            <h3 style="color: var(--color-text-highlight); margin-bottom: 0.5rem;">
+                                <a href="{{.URL}}" style="text-decoration: underline; text-decoration-color: transparent; transition: text-decoration-color 0.3s;" 
+                                   onmouseover="this.style.textDecorationColor='var(--color-text-highlight)'"
+                                   onmouseout="this.style.textDecorationColor='transparent'">{{.Company}}</a>
+                            </h3>
+                            <p style="color: var(--color-text-base-muted); font-size: var(--font-size-h5); margin-bottom: 0.8rem;">
+                                {{.Title}}
+                            </p>
+                            <p style="color: var(--color-text-subdue); font-size: var(--font-size-h6); margin-bottom: 1rem;">
+                                ({{.Period}})
+                            </p>
+                            <p style="color: var(--color-text-paragraph); line-height: 1.7;">
+                                {{.Description}}
+                            </p>
+                        </article>
+                        {{end}}
+                    </div>
+
+                    <div>
+                        <h2 style="font-size: var(--font-size-h2); color: var(--color-primary); margin-bottom: calc(var(--widget-gap) * 1.5);">
+                            projects
+                        </h2>
+                        {{range .Projects}}
+                        <article style="margin-bottom: calc(var(--widget-gap) * 1.5);">
+                            <h3 style="color: var(--color-text-highlight); margin-bottom: 0.5rem;">
+                                <a href="{{.URL}}" style="text-decoration: underline; text-decoration-color: transparent; transition: text-decoration-color 0.3s;"
+                                   onmouseover="this.style.textDecorationColor='var(--color-text-highlight)'"
+                                   onmouseout="this.style.textDecorationColor='transparent'">{{.Name}}</a>
+                            </h3>
+                            <p style="color: var(--color-text-paragraph); line-height: 1.7;">
+                                {{.Description}}
+                            </p>
+                        </article>
+                        {{end}}
+                    </div>
+
+                </section>
+
+            </div>
+        </main>
+
+    </div>
+
+    <!-- CMD+K Modal -->
+    <div id="cmd-k-modal" class="modal-backdrop" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); z-index: 1000; align-items: flex-start; justify-content: center; padding-top: 15vh; backdrop-filter: blur(4px);">
+        <div class="modal-content" style="background: var(--color-widget-background); border: 1px solid var(--color-widget-content-border); border-radius: var(--border-radius); width: 90%; max-width: 600px; overflow: hidden; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);">
+            <input type="text" id="cmd-k-input" placeholder="search..." style="width: 100%; padding: 1.5rem; background: transparent; border: none; border-bottom: 1px solid var(--color-separator); color: var(--color-text-highlight); font-size: var(--font-size-h3);">
+            <div id="cmd-k-results" style="max-height: 400px; overflow-y: auto;">
+                <a href="/" class="search-result" data-title="home" style="display: block; padding: 1.2rem 1.5rem; color: var(--color-text-paragraph); border-bottom: 1px solid var(--color-separator); transition: background 0.2s;">
+                    <span style="color: var(--color-text-highlight);">home</span>
+                    <span style="color: var(--color-text-subdue); margin-left: 1rem;">→</span>
+                </a>
+                <a href="/blog" class="search-result" data-title="blog" style="display: block; padding: 1.2rem 1.5rem; color: var(--color-text-paragraph); border-bottom: 1px solid var(--color-separator); transition: background 0.2s;">
+                    <span style="color: var(--color-text-highlight);">blog</span>
+                    <span style="color: var(--color-text-subdue); margin-left: 1rem;">→</span>
+                </a>
+                <a href="/books" class="search-result" data-title="books" style="display: block; padding: 1.2rem 1.5rem; color: var(--color-text-paragraph); border-bottom: 1px solid var(--color-separator); transition: background 0.2s;">
+                    <span style="color: var(--color-text-highlight);">books</span>
+                    <span style="color: var(--color-text-subdue); margin-left: 1rem;">→</span>
+                </a>
+                <a href="/rss" class="search-result" data-title="rss feed" style="display: block; padding: 1.2rem 1.5rem; color: var(--color-text-paragraph); transition: background 0.2s;">
+                    <span style="color: var(--color-text-highlight);">rss</span>
+                    <span style="color: var(--color-text-subdue); margin-left: 1rem;">→</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .nav-item {
+            font-size: var(--font-size-h4);
+            position: relative;
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--color-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        .nav-item-current::after {
+            width: 100%;
+        }
+
+        #cmd-k-trigger:hover {
+            color: var(--color-text-base);
+        }
+
+        #cmd-k-trigger:hover kbd {
+            border-color: var(--color-primary);
+        }
+
+        .search-result:hover,
+        .search-result.selected {
+            background: var(--color-widget-background-highlight);
+        }
+
+        #cmd-k-input:focus {
+            outline: none;
+        }
+
+        .modal-backdrop {
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(0.9);
+            }
+        }
+
+        h1:hover {
+            animation: glitch 0.3s ease;
+        }
+
+        @keyframes glitch {
+            0% {
+                transform: translate(0);
+            }
+            20% {
+                transform: translate(-2px, 2px);
+            }
+            40% {
+                transform: translate(-2px, -2px);
+            }
+            60% {
+                transform: translate(2px, 2px);
+            }
+            80% {
+                transform: translate(2px, -2px);
+            }
+            100% {
+                transform: translate(0);
+            }
+        }
+
+        article a {
+            position: relative;
+        }
+
+        article a::before {
+            content: '→ ';
+            position: absolute;
+            left: -1.5rem;
+            opacity: 0;
+            transition: opacity 0.3s, left 0.3s;
+            color: var(--color-primary);
+        }
+
+        article a:hover::before {
+            opacity: 1;
+            left: -2rem;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem !important;
+            }
+
+            .nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            section[style*="grid-template-columns: auto 1fr"] {
+                grid-template-columns: 1fr !important;
+                text-align: center;
+            }
+
+            section[style*="grid-template-columns: auto 1fr"] pre {
+                font-size: 0.8rem !important;
+                margin-bottom: 1.5rem;
+                display: inline-block;
+            }
+
+            section[style*="grid-template-columns: auto 1fr"] > div {
+                text-align: center;
+            }
+
+            section[style*="grid-template-columns: auto 1fr"] h1 {
+                text-align: center;
+            }
+
+            .nav-item {
+                padding: 0.3rem 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav {
+                gap: 0.5rem !important;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--color-background);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-text-subdue);
+            border-radius: var(--border-radius);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-text-base);
+        }
+    </style>
+
+    <script>
+        const modal = document.getElementById('cmd-k-modal');
+        const input = document.getElementById('cmd-k-input');
+        const results = document.querySelectorAll('.search-result');
+        let selectedIndex = 0;
+
+        document.addEventListener('keydown', (e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                openModal();
+            }
+
+            if (e.key === 'Escape' && modal.style.display === 'flex') {
+                closeModal();
+            }
+
+            if (modal.style.display === 'flex') {
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    selectedIndex = Math.min(selectedIndex + 1, results.length - 1);
+                    updateSelection();
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    selectedIndex = Math.max(selectedIndex - 1, 0);
+                    updateSelection();
+                } else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    results[selectedIndex].click();
+                }
+            }
+        });
+
+        document.getElementById('cmd-k-trigger').addEventListener('click', openModal);
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        input.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            results.forEach(result => {
+                const title = result.getAttribute('data-title').toLowerCase();
+                result.style.display = title.includes(query) ? 'block' : 'none';
+            });
+        });
+
+        function openModal() {
+            modal.style.display = 'flex';
+            input.value = '';
+            input.focus();
+            selectedIndex = 0;
+            results.forEach(r => r.style.display = 'block');
+            updateSelection();
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        function updateSelection() {
+            results.forEach((r, i) => {
+                if (i === selectedIndex) {
+                    r.classList.add('selected');
+                    r.scrollIntoView({ block: 'nearest' });
+                } else {
+                    r.classList.remove('selected');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
