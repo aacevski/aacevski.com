@@ -228,7 +228,7 @@ func main() {
 	if err := copyFile("static/favicon.svg", filepath.Join(outputDir, "static/favicon.svg")); err != nil {
 		log.Fatal(err)
 	}
-	if err := copyFile("static/og-image.svg", filepath.Join(outputDir, "static/og-image.svg")); err != nil {
+	if err := copyFile("static/og-image.png", filepath.Join(outputDir, "static/og-image.png")); err != nil {
 		log.Fatal(err)
 	}
 
@@ -257,7 +257,7 @@ func main() {
 	log.Println("  • blog/index.html (blog listing)")
 	log.Println("  • rss (RSS feed)")
 	log.Println("  • static/favicon.svg")
-	log.Println("  • static/og-image.svg")
+	log.Println("  • static/og-image.png")
 }
 
 func buildRSSFeed(posts []BlogPost, outputDir string) error {
