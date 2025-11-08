@@ -41,7 +41,7 @@ func deploy() error {
 
 	distPath := filepath.Join(projectRoot, "dist")
 
-	cmd := exec.Command("wrangler", "pages", "deploy", distPath, "--project-name=aacevski-com")
+	cmd := exec.Command("wrangler", "pages", "deploy", distPath, "--project-name=aacevski-com", "--branch=production")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 

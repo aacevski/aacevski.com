@@ -19,6 +19,7 @@ func main() {
 	router := mux.NewRouter()
 	router.HandleFunc("/", HomeHandler).Methods("GET")
 	router.HandleFunc("/blog", BlogHandler).Methods("GET")
+	router.HandleFunc("/blog/{slug}", BlogPostHandler).Methods("GET")
 	router.HandleFunc("/books", BooksHandler).Methods("GET")
 	router.HandleFunc("/rss", RSSHandler).Methods("GET")
 

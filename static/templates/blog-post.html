@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>{{.Post.Title}} ~ andrej acevski</title>
+    <link rel="alternate" type="application/rss+xml" title="andrej acevski" href="https://aacevski.com/rss">
+    <link rel="stylesheet" href="/static/css/main.css">
+    
+    <style>
+        .blog-content {
+            color: var(--color-text-paragraph);
+            line-height: 1.8;
+        }
+        
+        .blog-content h1 {
+            font-size: var(--font-size-h1);
+            color: var(--color-text-highlight);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .blog-content h2 {
+            font-size: var(--font-size-h2);
+            color: var(--color-text-highlight);
+            margin-top: 1.8rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .blog-content h3 {
+            font-size: var(--font-size-h3);
+            color: var(--color-text-base);
+            margin-top: 1.5rem;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+        }
+        
+        .blog-content p {
+            margin-bottom: 1.2rem;
+        }
+        
+        .blog-content a {
+            color: var(--color-primary);
+            text-decoration: underline;
+            transition: opacity 0.3s;
+        }
+        
+        .blog-content a:hover {
+            opacity: 0.8;
+        }
+        
+        .blog-content ul, .blog-content ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-text-paragraph);
+        }
+        
+        .blog-content ul {
+            list-style-type: disc;
+        }
+        
+        .blog-content ol {
+            list-style-type: decimal;
+        }
+        
+        .blog-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.7;
+        }
+        
+        .blog-content code {
+            background: var(--color-widget-background);
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+            color: var(--color-primary);
+            border: 1px solid var(--color-widget-content-border);
+        }
+        
+        .blog-content pre {
+            background: var(--color-widget-background);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--color-widget-content-border);
+            position: relative;
+        }
+        
+        .blog-content pre:hover .copy-button {
+            opacity: 1;
+        }
+        
+        .copy-button {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            padding: 0.4rem 0.8rem;
+            background: var(--color-background);
+            color: var(--color-text-base);
+            border: 1px solid var(--color-widget-content-border);
+            border-radius: 3px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.2s;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .copy-button:hover {
+            background: var(--color-widget-content-border);
+            color: var(--color-primary);
+        }
+        
+        .copy-button.copied {
+            color: hsl(150, 60%, 65%);
+            opacity: 1;
+        }
+        
+        .blog-content pre code {
+            background: none;
+            padding: 0;
+            border: none;
+            color: var(--color-text-base);
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+        
+        .blog-content .chroma {
+            background: transparent !important;
+        }
+        
+        .blog-content .chroma .k { color: var(--color-primary); font-weight: 600; }
+        .blog-content .chroma .kc { color: var(--color-primary); font-weight: 600; }
+        .blog-content .chroma .kd { color: hsl(200, 70%, 70%); font-style: italic; }
+        .blog-content .chroma .kn { color: var(--color-negative); font-weight: 600; }
+        .blog-content .chroma .kp { color: var(--color-primary); }
+        .blog-content .chroma .kr { color: var(--color-primary); font-weight: 600; }
+        .blog-content .chroma .kt { color: hsl(200, 70%, 70%); }
+        .blog-content .chroma .na { color: hsl(150, 60%, 65%); }
+        .blog-content .chroma .nb { color: hsl(200, 70%, 70%); }
+        .blog-content .chroma .nc { color: hsl(150, 60%, 65%); }
+        .blog-content .chroma .no { color: hsl(280, 60%, 70%); }
+        .blog-content .chroma .nd { color: var(--color-primary); }
+        .blog-content .chroma .ni { color: var(--color-text-highlight); }
+        .blog-content .chroma .ne { color: hsl(150, 60%, 65%); }
+        .blog-content .chroma .nf { color: hsl(150, 60%, 65%); }
+        .blog-content .chroma .nl { color: hsl(200, 70%, 70%); }
+        .blog-content .chroma .nn { color: var(--color-text-highlight); }
+        .blog-content .chroma .nx { color: var(--color-text-base); }
+        .blog-content .chroma .py { color: var(--color-text-base); }
+        .blog-content .chroma .nt { color: var(--color-negative); }
+        .blog-content .chroma .nv { color: hsl(200, 70%, 70%); }
+        .blog-content .chroma .s { color: hsl(43, 70%, 75%); }
+        .blog-content .chroma .sa { color: hsl(43, 70%, 75%); }
+        .blog-content .chroma .sb { color: hsl(43, 70%, 75%); }
+        .blog-content .chroma .sc { color: hsl(43, 70%, 75%); }
+        .blog-content .chroma .dl { color: hsl(43, 70%, 75%); }
+        .blog-content .chroma .sd { color: hsl(43, 70%, 75%); }
+        .blog-content .chroma .s2 { color: hsl(43, 70%, 75%); }
+        .blog-content .chroma .se { color: var(--color-primary); }
+        .blog-content .chroma .sh { color: hsl(43, 70%, 75%); }
+        .blog-content .chroma .si { color: hsl(43, 70%, 75%); }
+        .blog-content .chroma .sx { color: hsl(43, 70%, 75%); }
+        .blog-content .chroma .sr { color: hsl(43, 70%, 75%); }
+        .blog-content .chroma .s1 { color: hsl(43, 70%, 75%); }
+        .blog-content .chroma .ss { color: hsl(43, 70%, 75%); }
+        .blog-content .chroma .m { color: hsl(280, 60%, 70%); }
+        .blog-content .chroma .mb { color: hsl(280, 60%, 70%); }
+        .blog-content .chroma .mf { color: hsl(280, 60%, 70%); }
+        .blog-content .chroma .mh { color: hsl(280, 60%, 70%); }
+        .blog-content .chroma .mi { color: hsl(280, 60%, 70%); }
+        .blog-content .chroma .il { color: hsl(280, 60%, 70%); }
+        .blog-content .chroma .mo { color: hsl(280, 60%, 70%); }
+        .blog-content .chroma .o { color: var(--color-negative); }
+        .blog-content .chroma .ow { color: var(--color-negative); }
+        .blog-content .chroma .p { color: var(--color-text-base); }
+        .blog-content .chroma .c { color: var(--color-text-subdue); font-style: italic; }
+        .blog-content .chroma .ch { color: var(--color-text-subdue); font-style: italic; }
+        .blog-content .chroma .cm { color: var(--color-text-subdue); font-style: italic; }
+        .blog-content .chroma .c1 { color: var(--color-text-subdue); font-style: italic; }
+        .blog-content .chroma .cs { color: var(--color-text-subdue); font-style: italic; }
+        .blog-content .chroma .cp { color: var(--color-primary); }
+        .blog-content .chroma .cpf { color: var(--color-text-subdue); font-style: italic; }
+        .blog-content .chroma .gd { color: var(--color-negative); }
+        .blog-content .chroma .ge { font-style: italic; }
+        .blog-content .chroma .gi { color: hsl(150, 60%, 65%); }
+        .blog-content .chroma .gs { font-weight: bold; }
+        .blog-content .chroma .gu { color: var(--color-text-subdue); }
+        
+        .blog-content blockquote {
+            border-left: 3px solid var(--color-primary);
+            padding-left: 1.5rem;
+            margin-left: 0;
+            margin-bottom: 1.5rem;
+            margin-top: 1.5rem;
+            color: var(--color-text-subdue);
+            font-style: italic;
+        }
+        
+        .blog-content hr {
+            border: none;
+            border-top: 1px solid var(--color-widget-content-border);
+            margin: 2.5rem 0;
+        }
+        
+        .blog-content strong {
+            font-weight: 600;
+            color: var(--color-text-highlight);
+        }
+        
+        .blog-content em {
+            font-style: italic;
+        }
+        
+        .blog-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+        
+        .blog-content table th,
+        .blog-content table td {
+            padding: 0.75rem;
+            border: 1px solid var(--color-widget-content-border);
+            text-align: left;
+        }
+        
+        .blog-content table th {
+            background: var(--color-widget-background);
+            color: var(--color-text-highlight);
+            font-weight: 600;
+        }
+        
+        .blog-content table tr:hover {
+            background: var(--color-widget-background);
+        }
+        
+        .blog-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--border-radius);
+            margin: 1.5rem 0;
+            border: 1px solid var(--color-widget-content-border);
+        }
+        
+        .blog-content figure {
+            margin: 2rem 0;
+        }
+        
+        .blog-content figcaption {
+            text-align: center;
+            font-size: 0.9em;
+            color: var(--color-text-subdue);
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="body-content">
+        <header class="header-container" style="max-width: 760px; width: 100%; margin: 0 auto; padding: calc(var(--widget-gap) * 1.5) var(--content-bounds-padding) var(--widget-gap) var(--content-bounds-padding);">
+            <nav style="background: var(--color-widget-background); border-radius: var(--border-radius); border: 1px solid var(--color-widget-content-border); padding: 0.8rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 2rem;">
+                    <a href="/" class="nav-item">home</a>
+                    <a href="/blog" class="nav-item nav-item-current">blog</a>
+                    <a href="/books" class="nav-item">books</a>
+                    <a href="/rss" class="nav-item">rss</a>
+                </div>
+                <button id="cmd-k-trigger" aria-label="Search" style="background: transparent; color: var(--color-text-base); display: inline-flex; align-items: center; gap: 0.4rem; padding: 0; cursor: pointer; border: none; transition: color 0.3s; line-height: 1;">
+                    <span style="font-size: var(--font-size-h5);">⌘</span>
+                    <kbd style="font-size: var(--font-size-h6); padding: 0.2rem 0.5rem; margin: 0; border: 1px solid var(--color-widget-content-border); background: var(--color-background); border-radius: 3px; box-shadow: none; font-family: inherit; line-height: 1; color: var(--color-text-base);">K</kbd>
+                </button>
+            </nav>
+        </header>
+
+        <main class="page content-ready">
+            <div class="page-content" style="max-width: 760px; width: 100%; margin: 0 auto; padding: 0 var(--content-bounds-padding);">
+                
+                <article style="padding: calc(var(--widget-gap) * 0.1) 0 calc(var(--widget-gap) * 2) 0;">
+                    <a href="/blog" style="color: var(--color-text-subdue); text-decoration: none; font-size: var(--font-size-h5); display: inline-block; margin-bottom: 1.5rem; transition: color 0.3s;"
+                       onmouseover="this.style.color='var(--color-primary)'"
+                       onmouseout="this.style.color='var(--color-text-subdue)'">
+                        ← back to blog
+                    </a>
+                    
+                    <h1 style="font-size: clamp(2rem, 5vw, 3rem); color: var(--color-negative); line-height: 1.1; margin-bottom: 1rem; font-style: italic;">
+                        {{.Post.Title}}
+                    </h1>
+                    <p style="color: var(--color-text-subdue); margin-bottom: calc(var(--widget-gap) * 2);">
+                        {{.Post.Date}}
+                    </p>
+                    
+                    <div class="blog-content">
+                        {{.Post.Content}}
+                    </div>
+                </article>
+
+            </div>
+        </main>
+
+    </div>
+
+    <!-- CMD+K Modal -->
+    <div id="cmd-k-modal" class="modal-backdrop" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); z-index: 1000; align-items: flex-start; justify-content: center; padding-top: 15vh; backdrop-filter: blur(4px);">
+        <div class="modal-content" style="background: var(--color-widget-background); border: 1px solid var(--color-widget-content-border); border-radius: var(--border-radius); width: 90%; max-width: 600px; overflow: hidden; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);">
+            <input type="text" id="cmd-k-input" placeholder="search..." style="width: 100%; padding: 1.5rem; background: transparent; border: none; border-bottom: 1px solid var(--color-separator); color: var(--color-text-highlight); font-size: var(--font-size-h3);">
+            <div id="cmd-k-results" style="max-height: 400px; overflow-y: auto;">
+                <a href="/" class="search-result" data-title="home" style="display: block; padding: 1.2rem 1.5rem; color: var(--color-text-paragraph); border-bottom: 1px solid var(--color-separator); transition: background 0.2s;">
+                    <span style="color: var(--color-text-highlight);">home</span>
+                    <span style="color: var(--color-text-subdue); margin-left: 1rem;">→</span>
+                </a>
+                <a href="/blog" class="search-result" data-title="blog" style="display: block; padding: 1.2rem 1.5rem; color: var(--color-text-paragraph); border-bottom: 1px solid var(--color-separator); transition: background 0.2s;">
+                    <span style="color: var(--color-text-highlight);">blog</span>
+                    <span style="color: var(--color-text-subdue); margin-left: 1rem;">→</span>
+                </a>
+                <a href="/books" class="search-result" data-title="books" style="display: block; padding: 1.2rem 1.5rem; color: var(--color-text-paragraph); border-bottom: 1px solid var(--color-separator); transition: background 0.2s;">
+                    <span style="color: var(--color-text-highlight);">books</span>
+                    <span style="color: var(--color-text-subdue); margin-left: 1rem;">→</span>
+                </a>
+                <a href="/rss" class="search-result" data-title="rss feed" style="display: block; padding: 1.2rem 1.5rem; color: var(--color-text-paragraph); transition: background 0.2s;">
+                    <span style="color: var(--color-text-highlight);">rss</span>
+                    <span style="color: var(--color-text-subdue); margin-left: 1rem;">→</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .nav-item {
+            font-size: var(--font-size-h4);
+            position: relative;
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--color-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        .nav-item-current::after {
+            width: 100%;
+        }
+
+        #cmd-k-trigger:hover {
+            color: var(--color-text-base);
+        }
+
+        #cmd-k-trigger:hover kbd {
+            border-color: var(--color-primary);
+        }
+
+        .search-result:hover,
+        .search-result.selected {
+            background: var(--color-widget-background-highlight);
+        }
+
+        #cmd-k-input:focus {
+            outline: none;
+        }
+
+        .modal-backdrop {
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+
+    <script>
+        const modal = document.getElementById('cmd-k-modal');
+        const input = document.getElementById('cmd-k-input');
+        const results = document.querySelectorAll('.search-result');
+        let selectedIndex = 0;
+
+        document.addEventListener('keydown', (e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                openModal();
+            }
+
+            if (e.key === 'Escape' && modal.style.display === 'flex') {
+                closeModal();
+            }
+
+            if (modal.style.display === 'flex') {
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    selectedIndex = Math.min(selectedIndex + 1, results.length - 1);
+                    updateSelection();
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    selectedIndex = Math.max(selectedIndex - 1, 0);
+                    updateSelection();
+                } else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    results[selectedIndex].click();
+                }
+            }
+        });
+
+        document.getElementById('cmd-k-trigger').addEventListener('click', openModal);
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        input.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            results.forEach(result => {
+                const title = result.getAttribute('data-title').toLowerCase();
+                result.style.display = title.includes(query) ? 'block' : 'none';
+            });
+        });
+
+        function openModal() {
+            modal.style.display = 'flex';
+            input.value = '';
+            input.focus();
+            selectedIndex = 0;
+            results.forEach(r => r.style.display = 'block');
+            updateSelection();
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        function updateSelection() {
+            results.forEach((r, i) => {
+                if (i === selectedIndex) {
+                    r.classList.add('selected');
+                    r.scrollIntoView({ block: 'nearest' });
+                } else {
+                    r.classList.remove('selected');
+                }
+            });
+        }
+
+        // Copy button functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const preBlocks = document.querySelectorAll('.blog-content pre');
+            
+            preBlocks.forEach(function(pre) {
+                const button = document.createElement('button');
+                button.className = 'copy-button';
+                button.textContent = 'copy';
+                
+                button.addEventListener('click', function() {
+                    const code = pre.querySelector('code');
+                    const text = code.textContent;
+                    
+                    navigator.clipboard.writeText(text).then(function() {
+                        button.textContent = 'copied!';
+                        button.classList.add('copied');
+                        
+                        setTimeout(function() {
+                            button.textContent = 'copy';
+                            button.classList.remove('copied');
+                        }, 2000);
+                    }).catch(function(err) {
+                        button.textContent = 'failed';
+                        setTimeout(function() {
+                            button.textContent = 'copy';
+                        }, 2000);
+                    });
+                });
+                
+                pre.appendChild(button);
+            });
+        });
+    </script>
+</body>
+</html>
+
