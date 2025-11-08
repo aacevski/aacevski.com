@@ -312,6 +312,7 @@ kbd:active {
 .nav-item.nav-item-current {
     border-bottom-color: var(--color-primary);
     color: var(--color-text-highlight);
+    border-bottom-width: 1px;
 }
 
 .logout-button {

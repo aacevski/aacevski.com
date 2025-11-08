@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#17191f"/>
+  
+  <!-- Terminal window border -->
+  <rect x="80" y="80" width="1040" height="470" fill="none" stroke="#2a2d35" stroke-width="2" rx="8"/>
+  
+  <!-- Terminal header bar -->
+  <rect x="80" y="80" width="1040" height="40" fill="#2a2d35" rx="8"/>
+  <rect x="80" y="112" width="1040" height="8" fill="#2a2d35"/>
+  
+  <!-- Terminal dots -->
+  <circle cx="110" cy="100" r="6" fill="#ff5f56"/>
+  <circle cx="135" cy="100" r="6" fill="#ffbd2e"/>
+  <circle cx="160" cy="100" r="6" fill="#27c93f"/>
+  
+  <!-- Terminal content -->
+  <text x="120" y="180" font-family="monospace" font-size="32" fill="#6b7280" font-weight="500">$</text>
+  <text x="155" y="180" font-family="monospace" font-size="32" fill="#9ca3af" font-weight="500">whoami</text>
+  
+  <text x="120" y="240" font-family="monospace" font-size="48" fill="#d4b896" font-weight="bold">andrej acevski</text>
+  
+  <text x="120" y="310" font-family="monospace" font-size="28" fill="#9ca3af">eng @ codechem</text>
+  <text x="120" y="355" font-family="monospace" font-size="28" fill="#9ca3af">building kaneo</text>
+  
+  <text x="120" y="430" font-family="monospace" font-size="24" fill="#6b7280">skopje, mk</text>
+  
+  <!-- Cursor -->
+  <rect x="120" y="470" width="16" height="28" fill="#d4b896" opacity="0.8"/>
+  
+  <!-- Website URL -->
+  <text x="1080" y="520" font-family="monospace" font-size="20" fill="#6b7280" text-anchor="end">aacevski.com</text>
+</svg>
+

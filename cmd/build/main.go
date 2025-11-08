@@ -1,10 +1,25 @@
 package main
 
 import (
+	"bytes"
+	"encoding/xml"
+	"fmt"
 	"html/template"
 	"log"
 	"os"
 	"path/filepath"
+	"sort"
+	"strings"
+	"time"
+
+	"aacevski.com/pkg/koreader"
+	"github.com/alecthomas/chroma/v2/formatters/html"
+	"github.com/joho/godotenv"
+	"github.com/yuin/goldmark"
+	highlighting "github.com/yuin/goldmark-highlighting/v2"
+	"github.com/yuin/goldmark/extension"
+	"github.com/yuin/goldmark/parser"
+	goldmarkhtml "github.com/yuin/goldmark/renderer/html"
 )
 
 type HomeData struct {
@@ -18,6 +33,7 @@ type HomeData struct {
 	AsciiArt         string
 	Work             []WorkItem
 	Projects         []ProjectItem
+	ReadingStats     *koreader.ReadingStats
 }
 
 type WorkItem struct {
@@ -34,7 +50,44 @@ type ProjectItem struct {
 	URL         string
 }
 
+type BlogPost struct {
+	Title   string
+	Date    string
+	RawDate time.Time
+	Slug    string
+	Excerpt string
+	Content template.HTML
+}
+
+type RSSFeed struct {
+	XMLName xml.Name `xml:"rss"`
+	Version string   `xml:"version,attr"`
+	Channel Channel  `xml:"channel"`
+}
+
+type Channel struct {
+	Title         string `xml:"title"`
+	Link          string `xml:"link"`
+	Description   string `xml:"description"`
+	Language      string `xml:"language"`
+	LastBuildDate string `xml:"lastBuildDate"`
+	Items         []Item `xml:"item"`
+}
+
+type Item struct {
+	Title       string `xml:"title"`
+	Link        string `xml:"link"`
+	Description string `xml:"description"`
+	PubDate     string `xml:"pubDate"`
+	GUID        string `xml:"guid"`
+}
+
 func main() {
+	// Load .env file if it exists (ignore error if file doesn't exist)
+	if err := godotenv.Load(); err != nil {
+		log.Println("No .env file found, using system environment variables")
+	}
+
 	outputDir := "dist"
 	if err := os.RemoveAll(outputDir); err != nil {
 		log.Fatal(err)
@@ -48,7 +101,16 @@ func main() {
 		log.Fatal(err)
 	}
 
-	data := getHomeData()
+	log.Println("Fetching book statistics from KOReader...")
+	readingStats, err := koreader.FetchStatsFromEnv()
+	if err != nil {
+		log.Printf("Warning: Failed to fetch book statistics: %v", err)
+		readingStats = &koreader.ReadingStats{}
+	} else {
+		log.Printf("✓ Fetched statistics for %d books", readingStats.TotalBooks)
+	}
+
+	data := getHomeData(readingStats)
 
 	indexFile, err := os.Create(filepath.Join(outputDir, "index.html"))
 	if err != nil {
@@ -60,11 +122,113 @@ func main() {
 		log.Fatal(err)
 	}
 
+	booksTmpl, err := template.New("books.html").Funcs(template.FuncMap{
+		"divf": func(a, b int) float64 {
+			return float64(a) / float64(b)
+		},
+	}).ParseFiles("static/templates/books.html")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if err := os.MkdirAll(filepath.Join(outputDir, "books"), 0755); err != nil {
+		log.Fatal(err)
+	}
+
+	booksFile, err := os.Create(filepath.Join(outputDir, "books", "index.html"))
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer booksFile.Close()
+
+	if err := booksTmpl.Execute(booksFile, data); err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println("Building blog pages...")
+	posts, err := loadBlogPosts()
+	if err != nil {
+		log.Printf("Warning: Failed to load blog posts: %v", err)
+	} else {
+		sort.Slice(posts, func(i, j int) bool {
+			return posts[i].RawDate.After(posts[j].RawDate)
+		})
+
+		blogTmpl, err := template.ParseFiles("static/templates/blog.html")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		if err := os.MkdirAll(filepath.Join(outputDir, "blog"), 0755); err != nil {
+			log.Fatal(err)
+		}
+
+		blogListFile, err := os.Create(filepath.Join(outputDir, "blog", "index.html"))
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer blogListFile.Close()
+
+		blogData := struct {
+			Posts []BlogPost
+		}{
+			Posts: posts,
+		}
+
+		if err := blogTmpl.Execute(blogListFile, blogData); err != nil {
+			log.Fatal(err)
+		}
+
+		blogPostTmpl, err := template.ParseFiles("static/templates/blog-post.html")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		for _, post := range posts {
+			postDir := filepath.Join(outputDir, "blog", post.Slug)
+			if err := os.MkdirAll(postDir, 0755); err != nil {
+				log.Fatal(err)
+			}
+
+			postFile, err := os.Create(filepath.Join(postDir, "index.html"))
+			if err != nil {
+				log.Fatal(err)
+			}
+			defer postFile.Close()
+
+			postData := struct {
+				Post BlogPost
+			}{
+				Post: post,
+			}
+
+			if err := blogPostTmpl.Execute(postFile, postData); err != nil {
+				log.Fatal(err)
+			}
+		}
+
+		log.Printf("✓ Built %d blog posts", len(posts))
+
+		log.Println("Building RSS feed...")
+		if err := buildRSSFeed(posts, outputDir); err != nil {
+			log.Printf("Warning: Failed to build RSS feed: %v", err)
+		} else {
+			log.Println("✓ Built RSS feed")
+		}
+	}
+
 	if err := copyDir("static/css", filepath.Join(outputDir, "static/css")); err != nil {
 		log.Fatal(err)
 	}
 
 	if err := copyDir("static/fonts", filepath.Join(outputDir, "static/fonts")); err != nil {
+		log.Fatal(err)
+	}
+
+	if err := copyFile("static/favicon.svg", filepath.Join(outputDir, "static/favicon.svg")); err != nil {
+		log.Fatal(err)
+	}
+	if err := copyFile("static/og-image.svg", filepath.Join(outputDir, "static/og-image.svg")); err != nil {
 		log.Fatal(err)
 	}
 
@@ -79,15 +243,169 @@ func main() {
 
 /*.js
   Cache-Control: public, max-age=31536000, immutable
+
+/*.svg
+  Cache-Control: public, max-age=31536000, immutable
 `
 	if err := os.WriteFile(filepath.Join(outputDir, "_headers"), []byte(headersContent), 0644); err != nil {
 		log.Fatal(err)
 	}
 
 	log.Println("✓ Static site built successfully in ./dist")
+	log.Println("  • index.html (home page)")
+	log.Println("  • books/index.html (books page)")
+	log.Println("  • blog/index.html (blog listing)")
+	log.Println("  • rss (RSS feed)")
+	log.Println("  • static/favicon.svg")
+	log.Println("  • static/og-image.svg")
 }
 
-func getHomeData() HomeData {
+func buildRSSFeed(posts []BlogPost, outputDir string) error {
+	items := make([]Item, 0, len(posts))
+	for _, post := range posts {
+		items = append(items, Item{
+			Title:       post.Title,
+			Link:        "https://aacevski.com/blog/" + post.Slug,
+			Description: post.Excerpt,
+			PubDate:     post.RawDate.Format(time.RFC1123Z),
+			GUID:        "https://aacevski.com/blog/" + post.Slug,
+		})
+	}
+
+	lastBuildDate := time.Now().Format(time.RFC1123Z)
+	if len(posts) > 0 {
+		lastBuildDate = posts[0].RawDate.Format(time.RFC1123Z)
+	}
+
+	feed := RSSFeed{
+		Version: "2.0",
+		Channel: Channel{
+			Title:         "Andrej Acevski",
+			Link:          "https://aacevski.com",
+			Description:   "breaking code, building tools. software engineer writing about go, typescript, and making things that work.",
+			Language:      "en-us",
+			LastBuildDate: lastBuildDate,
+			Items:         items,
+		},
+	}
+
+	output, err := xml.MarshalIndent(feed, "", "  ")
+	if err != nil {
+		return err
+	}
+
+	rssFile, err := os.Create(filepath.Join(outputDir, "rss"))
+	if err != nil {
+		return err
+	}
+	defer rssFile.Close()
+
+	rssFile.Write([]byte(xml.Header))
+	rssFile.Write(output)
+
+	return nil
+}
+
+func loadBlogPosts() ([]BlogPost, error) {
+	var posts []BlogPost
+	blogDir := "content/blog"
+
+	files, err := os.ReadDir(blogDir)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, file := range files {
+		if filepath.Ext(file.Name()) != ".md" {
+			continue
+		}
+
+		slug := strings.TrimSuffix(file.Name(), ".md")
+		post, err := parseBlogPost(filepath.Join(blogDir, file.Name()), slug)
+		if err != nil {
+			log.Printf("Error parsing blog post %s: %v", file.Name(), err)
+			continue
+		}
+
+		posts = append(posts, post)
+	}
+
+	return posts, nil
+}
+
+func parseBlogPost(filePath, slug string) (BlogPost, error) {
+	content, err := os.ReadFile(filePath)
+	if err != nil {
+		return BlogPost{}, err
+	}
+
+	parts := strings.SplitN(string(content), "---", 3)
+	if len(parts) < 3 {
+		return BlogPost{}, fmt.Errorf("invalid frontmatter format")
+	}
+
+	frontmatter := parts[1]
+	markdown := strings.TrimSpace(parts[2])
+
+	post := BlogPost{Slug: slug}
+	lines := strings.Split(frontmatter, "\n")
+	for _, line := range lines {
+		line = strings.TrimSpace(line)
+		if line == "" {
+			continue
+		}
+
+		parts := strings.SplitN(line, ":", 2)
+		if len(parts) != 2 {
+			continue
+		}
+
+		key := strings.TrimSpace(parts[0])
+		value := strings.Trim(strings.TrimSpace(parts[1]), "\"")
+
+		switch key {
+		case "title":
+			post.Title = value
+		case "date":
+			post.Date = value
+			if parsedDate, err := time.Parse("2006-01-02", value); err == nil {
+				post.RawDate = parsedDate
+			}
+		case "excerpt":
+			post.Excerpt = value
+		}
+	}
+
+	md := goldmark.New(
+		goldmark.WithExtensions(
+			extension.GFM,
+			highlighting.NewHighlighting(
+				highlighting.WithStyle("monokai"),
+				highlighting.WithFormatOptions(
+					html.WithClasses(true),
+				),
+			),
+		),
+		goldmark.WithParserOptions(
+			parser.WithAutoHeadingID(),
+		),
+		goldmark.WithRendererOptions(
+			goldmarkhtml.WithHardWraps(),
+			goldmarkhtml.WithXHTML(),
+			goldmarkhtml.WithUnsafe(),
+		),
+	)
+
+	var buf bytes.Buffer
+	if err := md.Convert([]byte(markdown), &buf); err != nil {
+		return BlogPost{}, err
+	}
+
+	post.Content = template.HTML(buf.String())
+	return post, nil
+}
+
+func getHomeData(readingStats *koreader.ReadingStats) HomeData {
 	return HomeData{
 		Name:             "Andrej Acevski",
 		Nickname:         "andrej's shell",
@@ -95,7 +413,7 @@ func getHomeData() HomeData {
 		Role:             "eng @ codechem",
 		Status:           "breaking code",
 		Bio:              "software engineer, open source advocate. fcse graduate. building kaneo and tools that make developers' lives easier.",
-		CurrentlyReading: "designing data-intensive applications",
+		CurrentlyReading: "the art of doing science and engineering",
 		AsciiArt: `⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⣴⣶⣶⣶⣶⣶⣶⣶⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣦⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -142,7 +460,7 @@ func getHomeData() HomeData {
 				Title:       "founder & engineer",
 				Period:      "'24 - present",
 				Description: "building an open source project management platform focused on simplicity and efficiency. 2.4k+ stars on github. go, typescript, postgres. making pm tools that don't suck.",
-				URL:         "https://usekaneo.com",
+				URL:         "https://kaneo.app",
 			},
 		},
 		Projects: []ProjectItem{
@@ -162,6 +480,7 @@ func getHomeData() HomeData {
 				URL:         "https://github.com/aacevski/aacevski.com",
 			},
 		},
+		ReadingStats: readingStats,
 	}
 }
 

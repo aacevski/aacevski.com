@@ -5,11 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>blog ~ andrej acevski</title>
+    <meta name="description" content="thoughts on software, dev tools, and building things that don't suck.">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aacevski.com/blog">
+    <meta property="og:title" content="blog ~ andrej acevski">
+    <meta property="og:description" content="thoughts on software, dev tools, and building things that don't suck.">
+    <meta property="og:image" content="https://aacevski.com/static/og-image.svg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://aacevski.com/blog">
+    <meta name="twitter:title" content="blog ~ andrej acevski">
+    <meta name="twitter:description" content="thoughts on software, dev tools, and building things that don't suck.">
+    <meta name="twitter:image" content="https://aacevski.com/static/og-image.svg">
+    
     <link rel="alternate" type="application/rss+xml" title="andrej acevski" href="https://aacevski.com/rss">
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
     <link rel="stylesheet" href="/static/css/main.css">
 </head>
-<body>
-    <div class="body-content">
+<body style="display: flex; flex-direction: column; min-height: 100vh;">
+    <div class="body-content" style="flex: 1;">
         <header class="header-container" style="max-width: 760px; width: 100%; margin: 0 auto; padding: calc(var(--widget-gap) * 1.5) var(--content-bounds-padding) var(--widget-gap) var(--content-bounds-padding);">
             <nav style="background: var(--color-widget-background); border-radius: var(--border-radius); border: 1px solid var(--color-widget-content-border); padding: 0.8rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
                 <div style="display: flex; align-items: center; gap: 2rem;">
@@ -34,9 +51,9 @@
                     </h1>
                     
                     {{if .Posts}}
-                    <div>
+                    <div class="blog-list">
                         {{range .Posts}}
-                        <article style="padding: 1.5rem 0; border-bottom: 1px solid var(--color-widget-content-border);">
+                        <article class="blog-list-item" style="padding: 1.5rem 0; border-bottom: 1px solid var(--color-widget-content-border);">
                             <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: 0.5rem;">
                                 <h2 style="font-size: var(--font-size-h2); color: var(--color-text-highlight); margin: 0;">
                                     <a href="/blog/{{.Slug}}" style="text-decoration: none; color: inherit; transition: color 0.3s;" 
@@ -57,9 +74,31 @@
                 </section>
 
             </div>
+
+
+    <footer style="max-width: 760px; width: 100%; margin: 0 auto; padding: calc(var(--widget-gap) * 0.1) var(--content-bounds-padding);">
+        <div style="text-align: center; padding: 1.5rem 0; border-top: 1px solid var(--color-widget-content-border);">
+            <div style="display: flex; justify-content: center; gap: 2rem; align-items: center;">
+                <a href="https://github.com/aacevski" target="_blank" rel="noopener noreferrer" 
+                   style="color: var(--color-text-base); text-decoration: none; transition: color 0.3s; font-size: var(--font-size-h4);"
+                   onmouseover="this.style.color='var(--color-primary)'"
+                   onmouseout="this.style.color='var(--color-text-base)'">
+                    github
+                </a>
+                <span style="color: var(--color-text-subdue);">·</span>
+                <a href="https://x.com/aacevski" target="_blank" rel="noopener noreferrer"
+                   style="color: var(--color-text-base); text-decoration: none; transition: color 0.3s; font-size: var(--font-size-h4);"
+                   onmouseover="this.style.color='var(--color-primary)'"
+                   onmouseout="this.style.color='var(--color-text-base)'">
+                    x
+                </a>
+            </div>
+        </div>
+    </footer>
         </main>
 
     </div>
+
 
     <!-- CMD+K Modal -->
     <div id="cmd-k-modal" class="modal-backdrop" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); z-index: 1000; align-items: flex-start; justify-content: center; padding-top: 15vh; backdrop-filter: blur(4px);">
@@ -109,6 +148,11 @@
 
         .nav-item-current::after {
             width: 100%;
+        }
+
+        /* Remove border from last blog item, and from single items */
+        .blog-list-item:last-child {
+            border-bottom: none !important;
         }
 
         #cmd-k-trigger:hover {

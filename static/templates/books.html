@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>books ~ andrej acevski</title>
+    <meta name="description" content="what i'm reading and have read. powered by koreader.">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aacevski.com/books">
+    <meta property="og:title" content="books ~ andrej acevski">
+    <meta property="og:description" content="what i'm reading and have read. powered by koreader.">
+    <meta property="og:image" content="https://aacevski.com/static/og-image.svg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://aacevski.com/books">
+    <meta name="twitter:title" content="books ~ andrej acevski">
+    <meta name="twitter:description" content="what i'm reading and have read. powered by koreader.">
+    <meta name="twitter:image" content="https://aacevski.com/static/og-image.svg">
+    
+    <link rel="alternate" type="application/rss+xml" title="andrej acevski" href="https://aacevski.com/rss">
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body style="display: flex; flex-direction: column; min-height: 100vh;">
+    <div class="body-content" style="flex: 1;">
+        <header class="header-container" style="max-width: 760px; width: 100%; margin: 0 auto; padding: calc(var(--widget-gap) * 1.5) var(--content-bounds-padding) var(--widget-gap) var(--content-bounds-padding);">
+            <nav style="background: var(--color-widget-background); border-radius: var(--border-radius); border: 1px solid var(--color-widget-content-border); padding: 0.8rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 2rem;">
+                    <a href="/" class="nav-item">home</a>
+                    <a href="/blog" class="nav-item">blog</a>
+                    <a href="/books" class="nav-item nav-item-current">books</a>
+                    <a href="/rss" class="nav-item">rss</a>
+                </div>
+                <button id="cmd-k-trigger" aria-label="Search" style="background: transparent; color: var(--color-text-base); display: inline-flex; align-items: center; gap: 0.4rem; padding: 0; cursor: pointer; border: none; transition: color 0.3s; line-height: 1;">
+                    <span style="font-size: var(--font-size-h5);">⌘</span>
+                    <kbd style="font-size: var(--font-size-h6); padding: 0.2rem 0.5rem; margin: 0; border: 1px solid var(--color-widget-content-border); background: var(--color-background); border-radius: 3px; box-shadow: none; font-family: inherit; line-height: 1; color: var(--color-text-base);">K</kbd>
+                </button>
+            </nav>
+        </header>
+
+        <main class="page content-ready">
+            <div class="page-content" style="max-width: 760px; width: 100%; margin: 0 auto; padding: 0 var(--content-bounds-padding);">
+                
+                <section style="padding: calc(var(--widget-gap) * 0.1) 0 calc(var(--widget-gap) * 0.1) 0;">
+                    <h1 style="font-size: clamp(2rem, 5vw, 3rem); color: var(--color-negative); line-height: 1.1; margin-bottom: calc(var(--widget-gap) * 1.5); font-style: italic;">
+                        books
+                    </h1>
+                    
+                    {{if .ReadingStats}}
+                    <!-- Reading Statistics Overview -->
+                    {{if or (gt .ReadingStats.TotalBooks 0) (gt .ReadingStats.TotalPagesRead 0)}}
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: calc(var(--widget-gap) * 2); padding: 1.5rem; background: var(--color-widget-background); border: 1px solid var(--color-widget-content-border); border-radius: var(--border-radius);">
+                        {{if gt .ReadingStats.TotalBooks 0}}
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; color: var(--color-primary); font-weight: bold; margin-bottom: 0.3rem;">{{.ReadingStats.TotalBooks}}</div>
+                            <div style="color: var(--color-text-subdue); font-size: var(--font-size-h6);">total books</div>
+                        </div>
+                        {{end}}
+                        {{if gt .ReadingStats.BooksThisYear 0}}
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; color: var(--color-primary); font-weight: bold; margin-bottom: 0.3rem;">{{.ReadingStats.BooksThisYear}}</div>
+                            <div style="color: var(--color-text-subdue); font-size: var(--font-size-h6);">finished this year</div>
+                        </div>
+                        {{end}}
+                        {{if gt .ReadingStats.TotalPagesRead 0}}
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; color: var(--color-primary); font-weight: bold; margin-bottom: 0.3rem;">{{.ReadingStats.TotalPagesRead}}</div>
+                            <div style="color: var(--color-text-subdue); font-size: var(--font-size-h6);">pages read</div>
+                        </div>
+                        {{end}}
+                        {{if gt .ReadingStats.TotalReadingTime 0}}
+                        <div style="text-align: center;">
+                            {{if ge .ReadingStats.TotalReadingTime 60}}
+                            <div style="font-size: 2rem; color: var(--color-primary); font-weight: bold; margin-bottom: 0.3rem;">{{printf "%.1f" (divf .ReadingStats.TotalReadingTime 60)}}h</div>
+                            {{else}}
+                            <div style="font-size: 2rem; color: var(--color-primary); font-weight: bold; margin-bottom: 0.3rem;">{{.ReadingStats.TotalReadingTime}}m</div>
+                            {{end}}
+                            <div style="color: var(--color-text-subdue); font-size: var(--font-size-h6);">reading time</div>
+                        </div>
+                        {{end}}
+                    </div>
+                    {{end}}
+
+                    <!-- Currently Reading -->
+                    {{if .ReadingStats.CurrentBooks}}
+                    <div style="margin-bottom: calc(var(--widget-gap) * 2.5);">
+                        <h2 style="font-size: var(--font-size-h2); color: var(--color-primary); margin-bottom: calc(var(--widget-gap) * 1.5);">
+                            currently reading
+                        </h2>
+                        {{range .ReadingStats.CurrentBooks}}
+                        <article style="margin-bottom: 1.5rem; padding: 1.5rem; background: var(--color-widget-background); border: 1px solid var(--color-widget-content-border); border-radius: var(--border-radius);">
+                            <h3 style="font-size: var(--font-size-h3); color: var(--color-text-highlight); margin-bottom: 0.5rem;">
+                                {{.Title}}
+                            </h3>
+                            <p style="color: var(--color-text-base-muted); font-size: var(--font-size-h5); margin-bottom: 1rem;">
+                                by {{.Author}}
+                            </p>
+                            
+                            <!-- Progress Bar -->
+                            <div style="margin-bottom: 0.8rem;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span style="color: var(--color-text-subdue); font-size: var(--font-size-h6);">
+                                        {{.CurrentPage}} / {{.Pages}} pages
+                                    </span>
+                                    <span style="color: var(--color-primary); font-size: var(--font-size-h6); font-weight: bold;">
+                                        {{printf "%.0f" .Progress}}%
+                                    </span>
+                                </div>
+                                <div style="height: 8px; background: var(--color-background); border-radius: 4px; overflow: hidden; border: 1px solid var(--color-separator);">
+                                    <div style="height: 100%; background: var(--color-primary); width: {{printf "%.0f" .Progress}}%; transition: width 0.3s;"></div>
+                                </div>
+                            </div>
+                            
+                            <div style="display: flex; gap: 1.5rem; color: var(--color-text-subdue); font-size: var(--font-size-h6);">
+                                {{if gt .TotalReadingTime 0}}
+                                    {{if ge .TotalReadingTime 60}}
+                                    <span>⏱ {{printf "%.1f" (divf .TotalReadingTime 60)}}h reading time</span>
+                                    {{else}}
+                                    <span>⏱ {{.TotalReadingTime}}m reading time</span>
+                                    {{end}}
+                                {{end}}
+                                <span>📅 last read {{.LastRead.Format "Jan 2, 2006"}}</span>
+                            </div>
+                        </article>
+                        {{end}}
+                    </div>
+                    {{end}}
+
+                    <!-- Finished Books -->
+                    {{if .ReadingStats.FinishedBooks}}
+                    <div>
+                        <h2 style="font-size: var(--font-size-h2); color: var(--color-primary); margin-bottom: calc(var(--widget-gap) * 1.5);">
+                            finished
+                        </h2>
+                        {{range .ReadingStats.FinishedBooks}}
+                        <article style="padding: 1.2rem 0; border-bottom: 1px solid var(--color-widget-content-border);">
+                            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: 0.3rem;">
+                                <h3 style="font-size: var(--font-size-h3); color: var(--color-text-highlight); margin: 0;">
+                                    {{.Title}}
+                                </h3>
+                                <span style="color: var(--color-text-subdue); font-size: var(--font-size-h6); white-space: nowrap;">
+                                    {{.LastRead.Format "Jan 2006"}}
+                                </span>
+                            </div>
+                            <p style="color: var(--color-text-base-muted); font-size: var(--font-size-h5); margin-bottom: 0.5rem;">
+                                by {{.Author}}
+                            </p>
+                            <div style="display: flex; gap: 1rem; color: var(--color-text-subdue); font-size: var(--font-size-h6);">
+                                <span>📖 {{.Pages}} pages</span>
+                                {{if gt .TotalReadingTime 0}}
+                                    {{if ge .TotalReadingTime 60}}
+                                    <span>⏱ {{printf "%.1f" (divf .TotalReadingTime 60)}}h</span>
+                                    {{else}}
+                                    <span>⏱ {{.TotalReadingTime}}m</span>
+                                    {{end}}
+                                {{end}}
+                            </div>
+                        </article>
+                        {{end}}
+                    </div>
+                    {{end}}
+
+                    {{else}}
+                    <p style="color: var(--color-text-subdue); padding: 2rem 0;">
+                        no reading data available. make sure koreader sync is configured.
+                    </p>
+                    {{end}}
+                    
+                </section>
+
+            </div>
+
+
+    <footer style="max-width: 760px; width: 100%; margin: 0 auto; padding: calc(var(--widget-gap) * 0.1) var(--content-bounds-padding);">
+        <div style="text-align: center; padding: 1.5rem 0; border-top: 1px solid var(--color-widget-content-border);">
+            <div style="display: flex; justify-content: center; gap: 2rem; align-items: center;">
+                <a href="https://github.com/aacevski" target="_blank" rel="noopener noreferrer" 
+                   style="color: var(--color-text-base); text-decoration: none; transition: color 0.3s; font-size: var(--font-size-h4);"
+                   onmouseover="this.style.color='var(--color-primary)'"
+                   onmouseout="this.style.color='var(--color-text-base)'">
+                    github
+                </a>
+                <span style="color: var(--color-text-subdue);">·</span>
+                <a href="https://x.com/aacevski" target="_blank" rel="noopener noreferrer"
+                   style="color: var(--color-text-base); text-decoration: none; transition: color 0.3s; font-size: var(--font-size-h4);"
+                   onmouseover="this.style.color='var(--color-primary)'"
+                   onmouseout="this.style.color='var(--color-text-base)'">
+                    x
+                </a>
+            </div>
+        </div>
+    </footer>
+        </main>
+
+    </div>
+
+
+    <!-- CMD+K Modal -->
+    <div id="cmd-k-modal" class="modal-backdrop" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); z-index: 1000; align-items: flex-start; justify-content: center; padding-top: 15vh; backdrop-filter: blur(4px);">
+        <div class="modal-content" style="background: var(--color-widget-background); border: 1px solid var(--color-widget-content-border); border-radius: var(--border-radius); width: 90%; max-width: 600px; overflow: hidden; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);">
+            <input type="text" id="cmd-k-input" placeholder="search..." style="width: 100%; padding: 1.5rem; background: transparent; border: none; border-bottom: 1px solid var(--color-separator); color: var(--color-text-highlight); font-size: var(--font-size-h3);">
+            <div id="cmd-k-results" style="max-height: 400px; overflow-y: auto;">
+                <a href="/" class="search-result" data-title="home" style="display: block; padding: 1.2rem 1.5rem; color: var(--color-text-paragraph); border-bottom: 1px solid var(--color-separator); transition: background 0.2s;">
+                    <span style="color: var(--color-text-highlight);">home</span>
+                    <span style="color: var(--color-text-subdue); margin-left: 1rem;">→</span>
+                </a>
+                <a href="/blog" class="search-result" data-title="blog" style="display: block; padding: 1.2rem 1.5rem; color: var(--color-text-paragraph); border-bottom: 1px solid var(--color-separator); transition: background 0.2s;">
+                    <span style="color: var(--color-text-highlight);">blog</span>
+                    <span style="color: var(--color-text-subdue); margin-left: 1rem;">→</span>
+                </a>
+                <a href="/books" class="search-result" data-title="books" style="display: block; padding: 1.2rem 1.5rem; color: var(--color-text-paragraph); border-bottom: 1px solid var(--color-separator); transition: background 0.2s;">
+                    <span style="color: var(--color-text-highlight);">books</span>
+                    <span style="color: var(--color-text-subdue); margin-left: 1rem;">→</span>
+                </a>
+                <a href="/rss" class="search-result" data-title="rss" style="display: block; padding: 1.2rem 1.5rem; color: var(--color-text-paragraph); transition: background 0.2s;">
+                    <span style="color: var(--color-text-highlight);">rss</span>
+                    <span style="color: var(--color-text-subdue); margin-left: 1rem;">→</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // CMD+K Modal functionality
+        const modal = document.getElementById('cmd-k-modal');
+        const trigger = document.getElementById('cmd-k-trigger');
+        const input = document.getElementById('cmd-k-input');
+        const results = document.getElementById('cmd-k-results');
+
+        // Open modal with CMD+K or Ctrl+K
+        document.addEventListener('keydown', (e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                modal.style.display = 'flex';
+                input.focus();
+            }
+            // Close on Escape
+            if (e.key === 'Escape' && modal.style.display === 'flex') {
+                modal.style.display = 'none';
+                input.value = '';
+                filterResults('');
+            }
+        });
+
+        // Open on button click
+        trigger.addEventListener('click', () => {
+            modal.style.display = 'flex';
+            input.focus();
+        });
+
+        // Close on backdrop click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                input.value = '';
+                filterResults('');
+            }
+        });
+
+        // Filter results as user types
+        input.addEventListener('input', (e) => {
+            filterResults(e.target.value.toLowerCase());
+        });
+
+        function filterResults(query) {
+            const items = results.querySelectorAll('.search-result');
+            items.forEach(item => {
+                const title = item.dataset.title.toLowerCase();
+                if (title.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Handle arrow key navigation
+        let currentIndex = -1;
+        input.addEventListener('keydown', (e) => {
+            const visibleItems = Array.from(results.querySelectorAll('.search-result')).filter(item => item.style.display !== 'none');
+            
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                currentIndex = (currentIndex + 1) % visibleItems.length;
+                updateSelection(visibleItems);
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                currentIndex = currentIndex <= 0 ? visibleItems.length - 1 : currentIndex - 1;
+                updateSelection(visibleItems);
+            } else if (e.key === 'Enter' && currentIndex >= 0) {
+                e.preventDefault();
+                visibleItems[currentIndex].click();
+            }
+        });
+
+        function updateSelection(items) {
+            items.forEach((item, index) => {
+                if (index === currentIndex) {
+                    item.style.background = 'var(--color-background)';
+                } else {
+                    item.style.background = 'transparent';
+                }
+            });
+        }
+
+        // Hover effects for search results
+        results.querySelectorAll('.search-result').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.background = 'var(--color-background)';
+            });
+            item.addEventListener('mouseleave', function() {
+                this.style.background = 'transparent';
+            });
+        });
+    </script>
+
+    <style>
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .nav-item {
+            font-size: var(--font-size-h4);
+            position: relative;
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--color-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        .nav-item-current::after {
+            width: 100%;
+        }
+    </style>
+</body>
+</html>
+
