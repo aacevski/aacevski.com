@@ -231,6 +231,9 @@ func main() {
 	if err := copyFile("static/og-image.png", filepath.Join(outputDir, "static/og-image.png")); err != nil {
 		log.Fatal(err)
 	}
+	if err := copyFile("static/robots.txt", filepath.Join(outputDir, "robots.txt")); err != nil {
+		log.Fatal(err)
+	}
 
 	headersContent := `/*
   X-Frame-Options: DENY
@@ -246,6 +249,10 @@ func main() {
 
 /*.svg
   Cache-Control: public, max-age=31536000, immutable
+
+/robots.txt
+  Content-Type: text/plain
+  Cache-Control: public, max-age=3600
 `
 	if err := os.WriteFile(filepath.Join(outputDir, "_headers"), []byte(headersContent), 0644); err != nil {
 		log.Fatal(err)
@@ -256,6 +263,7 @@ func main() {
 	log.Println("  • books/index.html (books page)")
 	log.Println("  • blog/index.html (blog listing)")
 	log.Println("  • rss (RSS feed)")
+	log.Println("  • robots.txt")
 	log.Println("  • static/favicon.svg")
 	log.Println("  • static/og-image.png")
 }
