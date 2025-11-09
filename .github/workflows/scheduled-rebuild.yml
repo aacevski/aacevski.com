@@ -1,0 +1,50 @@
+name: Scheduled Rebuild and Deploy
+
+on:
+  # Run every day at 00:00 UTC
+  schedule:
+    - cron: '0 0 * * *'
+  
+  # Allow manual trigger from GitHub Actions UI
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: 'go.mod'
+          cache: true
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Wrangler
+        run: npm install -g wrangler
+
+      - name: Build static site
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GITHUB_USERNAME: ${{ secrets.GH_USERNAME }}
+          KOOFR_EMAIL: ${{ secrets.KOOFR_EMAIL }}
+          KOOFR_PASSWORD: ${{ secrets.KOOFR_PASSWORD }}
+          KOREADER_DB_PATH: ${{ secrets.KOREADER_DB_PATH }}
+        run: go run cmd/build/main.go
+
+      - name: Deploy to Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          wrangler pages deploy dist \
+            --project-name=aacevski-com \
+            --branch=production
+
