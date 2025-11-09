@@ -162,4 +162,3 @@ func parseBlogPost(filePath, slug string) (BlogPost, error) {
 	post.Content = template.HTML(buf.String())
 	return post, nil
 }
-
