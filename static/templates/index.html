@@ -130,6 +130,41 @@
 
                 </section>
 
+                {{if .Contributions}}
+                <section style="padding: calc(var(--widget-gap) * 2) 0 calc(var(--widget-gap) * 2) 0; border-top: 1px solid var(--color-widget-content-border); margin-top: calc(var(--widget-gap) * 2);">
+                    <h2 style="font-size: var(--font-size-h2); color: var(--color-primary); margin-bottom: calc(var(--widget-gap) * 1);">
+                        github activity
+                    </h2>
+                    <p style="color: var(--color-text-subdue); margin-bottom: calc(var(--widget-gap) * 1.5); font-size: var(--font-size-h5);">
+                        {{.Contributions.TotalContributions}} contributions in the last year
+                    </p>
+                    <div style="overflow-x: auto; overflow-y: hidden; padding: 1rem 0; position: relative;">
+                        <div class="contribution-graph" style="display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, 12px); gap: 3px; width: max-content; min-width: 100%;">
+                            {{range .Contributions.Weeks}}
+                                {{range .Days}}
+                                <div class="contribution-day" 
+                                     data-count="{{.ContributionCount}}" 
+                                     data-date="{{.Date}}" 
+                                     data-level="{{.Level}}"
+                                     style="width: 12px; height: 12px; border-radius: 2px; background: var(--contrib-level-{{.Level}}); cursor: pointer; transition: all 0.2s;">
+                                </div>
+                                {{end}}
+                            {{end}}
+                        </div>
+                        <div id="contribution-tooltip" style="display: none; position: fixed; background: var(--color-widget-background); border: 1px solid var(--color-widget-content-border); border-radius: var(--border-radius); padding: 0.5rem 0.75rem; font-size: var(--font-size-h6); color: var(--color-text-highlight); z-index: 1000; pointer-events: none; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);"></div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem;">
+                        <span style="color: var(--color-text-subdue); font-size: var(--font-size-h6);">less</span>
+                        <div style="width: 12px; height: 12px; background: var(--contrib-level-0); border-radius: 2px;"></div>
+                        <div style="width: 12px; height: 12px; background: var(--contrib-level-1); border-radius: 2px;"></div>
+                        <div style="width: 12px; height: 12px; background: var(--contrib-level-2); border-radius: 2px;"></div>
+                        <div style="width: 12px; height: 12px; background: var(--contrib-level-3); border-radius: 2px;"></div>
+                        <div style="width: 12px; height: 12px; background: var(--contrib-level-4); border-radius: 2px;"></div>
+                        <span style="color: var(--color-text-subdue); font-size: var(--font-size-h6);">more</span>
+                    </div>
+                </section>
+                {{end}}
+
             </div>
 
 
@@ -183,6 +218,36 @@
     </div>
 
     <style>
+        :root {
+            --contrib-level-0: hsl(var(--bghs), calc(var(--bgl) + 4%));
+            --contrib-level-1: hsl(43, 30%, 25%);
+            --contrib-level-2: hsl(43, 40%, 35%);
+            --contrib-level-3: hsl(43, 45%, 50%);
+            --contrib-level-4: hsl(43, 50%, 65%);
+        }
+
+        .contribution-day:hover {
+            transform: scale(1.3);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+        }
+
+        .contribution-graph {
+            font-size: 0;
+        }
+
+        @media (max-width: 768px) {
+            .contribution-day {
+                width: 10px !important;
+                height: 10px !important;
+            }
+
+            .contribution-graph {
+                grid-template-rows: repeat(7, 10px) !important;
+                gap: 2px !important;
+            }
+        }
+
         .nav-item {
             font-size: var(--font-size-h4);
             position: relative;
@@ -430,6 +495,57 @@
                     r.classList.remove('selected');
                 }
             });
+        }
+
+        // Contribution graph tooltip
+        const contributionDays = document.querySelectorAll('.contribution-day');
+        const tooltip = document.getElementById('contribution-tooltip');
+
+        if (contributionDays.length > 0 && tooltip) {
+            contributionDays.forEach(day => {
+                day.addEventListener('mouseenter', (e) => {
+                    const count = day.getAttribute('data-count');
+                    const date = day.getAttribute('data-date');
+                    
+                    // Format date: YYYY-MM-DD to "Day, Month DD, YYYY"
+                    const dateObj = new Date(date + 'T00:00:00');
+                    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                    const formattedDate = dateObj.toLocaleDateString('en-US', options);
+                    
+                    const contributionText = count === '1' ? 'contribution' : 'contributions';
+                    tooltip.textContent = `${count} ${contributionText} on ${formattedDate}`;
+                    tooltip.style.display = 'block';
+                    
+                    // Position tooltip near cursor
+                    updateTooltipPosition(e);
+                });
+
+                day.addEventListener('mousemove', (e) => {
+                    updateTooltipPosition(e);
+                });
+
+                day.addEventListener('mouseleave', () => {
+                    tooltip.style.display = 'none';
+                });
+            });
+
+            function updateTooltipPosition(e) {
+                const tooltipWidth = tooltip.offsetWidth;
+                const tooltipHeight = tooltip.offsetHeight;
+                let left = e.clientX + 10;
+                let top = e.clientY + 10;
+
+                // Adjust if tooltip goes off-screen
+                if (left + tooltipWidth > window.innerWidth) {
+                    left = e.clientX - tooltipWidth - 10;
+                }
+                if (top + tooltipHeight > window.innerHeight) {
+                    top = e.clientY - tooltipHeight - 10;
+                }
+
+                tooltip.style.left = left + 'px';
+                tooltip.style.top = top + 'px';
+            }
         }
     </script>
 </body>

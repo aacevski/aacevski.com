@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"aacevski.com/pkg/utils"
 	"github.com/studio-b12/gowebdav"
 	_ "modernc.org/sqlite"
 )
@@ -42,10 +43,10 @@ type Config struct {
 
 func FetchStatsFromEnv() (*ReadingStats, error) {
 	config := Config{
-		WebDAVURL: getEnvOrDefault("KOOFR_WEBDAV_URL", "https://app.koofr.net/dav/Koofr"),
+		WebDAVURL: utils.GetEnvOrDefault("KOOFR_WEBDAV_URL", "https://app.koofr.net/dav/Koofr"),
 		Email:     os.Getenv("KOOFR_EMAIL"),
 		Password:  os.Getenv("KOOFR_PASSWORD"),
-		DBPath:    getEnvOrDefault("KOREADER_DB_PATH", "/KOReader/statistics.sqlite3"),
+		DBPath:    utils.GetEnvOrDefault("KOREADER_DB_PATH", "/KOReader/statistics.sqlite3"),
 	}
 
 	if config.Email == "" || config.Password == "" {
@@ -81,7 +82,7 @@ func FetchStats(config Config) (*ReadingStats, error) {
 }
 
 func parseDatabase(db *sql.DB) (*ReadingStats, error) {
-	bookDir := getEnvOrDefault("KOREADER_BOOK_DIR", "/books")
+	bookDir := utils.GetEnvOrDefault("KOREADER_BOOK_DIR", "/books")
 
 	query := `
 		SELECT COALESCE(title, 'Unknown Title'), COALESCE(authors, 'Unknown Author'), 
@@ -115,7 +116,7 @@ func parseAlternativeSchema(db *sql.DB) (*ReadingStats, error) {
 	}
 	defer rows.Close()
 
-	bookDir := getEnvOrDefault("KOREADER_BOOK_DIR", "/books")
+	bookDir := utils.GetEnvOrDefault("KOREADER_BOOK_DIR", "/books")
 	return processBookRows(rows, db, bookDir, hasColumn(columns, "directory"))
 }
 
@@ -268,7 +269,7 @@ func hasColumn(columns []string, col string) bool {
 }
 
 func buildBookQuery(columns []string) (string, []interface{}) {
-	bookDir := getEnvOrDefault("KOREADER_BOOK_DIR", "/books")
+	bookDir := utils.GetEnvOrDefault("KOREADER_BOOK_DIR", "/books")
 	hasDir := hasColumn(columns, "directory")
 
 	if hasDir {
@@ -290,11 +291,4 @@ func buildBookQuery(columns []string) (string, []interface{}) {
 		ORDER BY last_open DESC LIMIT 50
 	`
 	return query, []interface{}{}
-}
-
-func getEnvOrDefault(key, defaultValue string) string {
-	if value := os.Getenv(key); value != "" {
-		return value
-	}
-	return defaultValue
 }

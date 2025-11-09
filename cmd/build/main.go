@@ -12,6 +12,7 @@ import (
 	"strings"
 	"time"
 
+	"aacevski.com/pkg/github"
 	"aacevski.com/pkg/koreader"
 	"github.com/alecthomas/chroma/v2/formatters/html"
 	"github.com/joho/godotenv"
@@ -34,6 +35,7 @@ type HomeData struct {
 	Work             []WorkItem
 	Projects         []ProjectItem
 	ReadingStats     *koreader.ReadingStats
+	Contributions    *github.ContributionData
 }
 
 type WorkItem struct {
@@ -418,6 +420,21 @@ func parseBlogPost(filePath, slug string) (BlogPost, error) {
 }
 
 func getHomeData(readingStats *koreader.ReadingStats) HomeData {
+	// Fetch GitHub contributions
+	var contributions *github.ContributionData
+	ghToken := os.Getenv("GITHUB_TOKEN")
+	ghUsername := os.Getenv("GITHUB_USERNAME")
+	if ghToken != "" && ghUsername != "" {
+		if c, err := github.GetContributions(ghUsername, ghToken); err == nil {
+			contributions = c
+			log.Printf("✓ Fetched GitHub contributions: %d total", c.TotalContributions)
+		} else {
+			log.Printf("⚠ Failed to fetch GitHub contributions: %v", err)
+		}
+	} else {
+		log.Println("⚠ GitHub credentials not provided, skipping contribution graph")
+	}
+
 	return HomeData{
 		Name:             "Andrej Acevski",
 		Nickname:         "andrej's shell",
@@ -492,7 +509,8 @@ func getHomeData(readingStats *koreader.ReadingStats) HomeData {
 				URL:         "https://github.com/aacevski/aacevski.com",
 			},
 		},
-		ReadingStats: readingStats,
+		ReadingStats:  readingStats,
+		Contributions: contributions,
 	}
 }
 

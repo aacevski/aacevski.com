@@ -8,11 +8,14 @@ import (
 
 	"aacevski.com/handlers"
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 )
 
 var templates *template.Template
 
 func main() {
+	godotenv.Load()
+
 	dir := "./static"
 
 	templates = template.Must(template.New("").Funcs(template.FuncMap{

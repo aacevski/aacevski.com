@@ -51,6 +51,30 @@ if credentials aren't provided, the build will continue without book statistics.
 
 **note:** make sure your KOReader is configured to sync to Koofr and the database path matches your setup.
 
+### github contribution graph
+
+the home page displays your GitHub contribution activity for the last year.
+
+**setup:**
+
+1. create a GitHub personal access token at https://github.com/settings/tokens/new
+   - select scopes: `read:user` (for reading your public profile and contributions)
+
+2. add to your `.env` file:
+```bash
+GITHUB_USERNAME=your-github-username
+GITHUB_TOKEN=ghp_your_personal_access_token_here
+```
+
+3. run the dev server or build:
+```bash
+make dev
+# or
+make build
+```
+
+if credentials aren't provided, the contribution graph will not be displayed.
+
 ## deploy to cloudflare pages
 
 ### option 1: one command deploy
@@ -80,6 +104,7 @@ make clean    # remove build artifacts
 ## features
 
 - **home page** - portfolio with work history and projects
+- **github activity** - contribution graph showing your coding activity
 - **blog** - markdown-based blog with syntax highlighting
 - **books** - reading statistics synced from koreader on koofr
 - **cmd+k search** - quick navigation modal

@@ -4,7 +4,9 @@ import (
 	"html/template"
 	"net/http"
 
+	"aacevski.com/pkg/github"
 	"aacevski.com/pkg/koreader"
+	"aacevski.com/pkg/utils"
 )
 
 type HomeData struct {
@@ -19,6 +21,7 @@ type HomeData struct {
 	Work             []WorkItem
 	Projects         []ProjectItem
 	ReadingStats     *koreader.ReadingStats
+	Contributions    *github.ContributionData
 }
 
 type WorkItem struct {
@@ -114,6 +117,14 @@ func Home(w http.ResponseWriter, r *http.Request, templates *template.Template) 
 			CurrentBooks:  []koreader.BookStats{},
 			FinishedBooks: []koreader.BookStats{},
 		},
+	}
+
+	ghToken := utils.GetEnvOrDefault("GITHUB_TOKEN", "")
+	ghUsername := utils.GetEnvOrDefault("GITHUB_USERNAME", "")
+	if ghToken != "" && ghUsername != "" {
+		if contributions, err := github.GetContributions(ghUsername, ghToken); err == nil {
+			data.Contributions = contributions
+		}
 	}
 
 	templates.ExecuteTemplate(w, "index.html", data)
