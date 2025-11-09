@@ -250,6 +250,10 @@ func main() {
 /*.svg
   Cache-Control: public, max-age=31536000, immutable
 
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+
 /robots.txt
   Content-Type: text/plain
   Cache-Control: public, max-age=3600
