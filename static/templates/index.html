@@ -60,7 +60,7 @@
                     <pre style="color: var(--color-text-subdue); font-size: 0.7rem; line-height: 1.2; white-space: pre; user-select: none; opacity: 0.6; filter: invert(1);">{{.AsciiArt}}</pre>
                     {{end}}
                     <div>
-                        <h1 style="font-size: clamp(2rem, 5vw, 3rem); color: var(--color-negative); line-height: 1.1; margin-bottom: 2rem; font-style: italic; animation: slideIn 0.6s ease-out;">
+                        <h1 style="font-size: clamp(2rem, 5vw, 3rem); color: var(--color-negative); line-height: 1.1; margin-bottom: 2rem;">
                             {{.Nickname}}
                         </h1>
                         <p style="color: var(--color-text-base); margin-bottom: 0.5rem;">{{.Location}}</p>
@@ -322,10 +322,6 @@
                 opacity: 0.5;
                 transform: scale(0.9);
             }
-        }
-
-        h1:hover {
-            animation: glitch 0.3s ease;
         }
 
         @keyframes glitch {
