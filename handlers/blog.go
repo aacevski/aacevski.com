@@ -160,5 +160,13 @@ func parseBlogPost(filePath, slug string) (BlogPost, error) {
 	}
 
 	post.Content = template.HTML(buf.String())
+
+	wordCount := len(strings.Fields(markdown))
+	readingMinutes := wordCount / 200
+	if readingMinutes < 1 {
+		readingMinutes = 1
+	}
+	post.ReadingTime = fmt.Sprintf("%d min read", readingMinutes)
+
 	return post, nil
 }

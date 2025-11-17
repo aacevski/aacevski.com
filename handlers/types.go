@@ -6,11 +6,12 @@ import (
 )
 
 type BlogPost struct {
-	Title   string
-	Date    string
-	RawDate time.Time
-	Slug    string
-	Excerpt string
-	Content template.HTML
+	Title       string
+	Date        string
+	RawDate     time.Time
+	Slug        string
+	Excerpt     string
+	Content     template.HTML
+	ReadingTime string
 }
 
