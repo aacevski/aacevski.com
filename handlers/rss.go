@@ -14,16 +14,24 @@ import (
 type RSSFeed struct {
 	XMLName xml.Name `xml:"rss"`
 	Version string   `xml:"version,attr"`
+	AtomNS  string   `xml:"xmlns:atom,attr"`
 	Channel Channel  `xml:"channel"`
 }
 
 type Channel struct {
-	Title         string `xml:"title"`
-	Link          string `xml:"link"`
-	Description   string `xml:"description"`
-	Language      string `xml:"language"`
-	LastBuildDate string `xml:"lastBuildDate"`
-	Items         []Item `xml:"item"`
+	Title         string   `xml:"title"`
+	Link          string   `xml:"link"`
+	Description   string   `xml:"description"`
+	Language      string   `xml:"language"`
+	AtomLink      AtomLink `xml:"atom:link"`
+	LastBuildDate string   `xml:"lastBuildDate"`
+	Items         []Item   `xml:"item"`
+}
+
+type AtomLink struct {
+	Href string `xml:"href,attr"`
+	Rel  string `xml:"rel,attr"`
+	Type string `xml:"type,attr"`
 }
 
 type Item struct {
@@ -64,11 +72,17 @@ func RSS(w http.ResponseWriter, r *http.Request) {
 
 	feed := RSSFeed{
 		Version: "2.0",
+		AtomNS:  "http://www.w3.org/2005/Atom",
 		Channel: Channel{
-			Title:         "Andrej Acevski",
-			Link:          "https://aacevski.com",
-			Description:   "breaking code, building tools. software engineer writing about go, typescript, and making things that work.",
-			Language:      "en-us",
+			Title:       "Andrej Acevski",
+			Link:        "https://aacevski.com",
+			Description: "breaking code, building tools. software engineer writing about go, typescript, and making things that work.",
+			Language:    "en-us",
+			AtomLink: AtomLink{
+				Href: "https://aacevski.com/rss.xml",
+				Rel:  "self",
+				Type: "application/rss+xml",
+			},
 			LastBuildDate: lastBuildDate,
 			Items:         items,
 		},

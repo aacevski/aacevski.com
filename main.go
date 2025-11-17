@@ -37,6 +37,10 @@ func main() {
 	router.HandleFunc("/books", func(w http.ResponseWriter, r *http.Request) {
 		handlers.Books(w, r, templates)
 	}).Methods("GET")
+	router.HandleFunc("/rss.xml", func(w http.ResponseWriter, r *http.Request) {
+		handlers.RSS(w, r)
+	}).Methods("GET")
+	// Keep /rss for backwards compatibility
 	router.HandleFunc("/rss", func(w http.ResponseWriter, r *http.Request) {
 		handlers.RSS(w, r)
 	}).Methods("GET")

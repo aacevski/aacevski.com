@@ -1,6 +1,6 @@
 ---
 title: "How I Built a Kindle Reading Stats Dashboard That Actually Works"
-date: "11-08-2025"
+date: "2025-11-08"
 excerpt: "forget goodreads. i turned my kindle into a reading stats machine that syncs to my portfolio website automatically. here's how."
 ---
 
