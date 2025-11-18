@@ -53,12 +53,13 @@ type ProjectItem struct {
 }
 
 type BlogPost struct {
-	Title   string
-	Date    string
-	RawDate time.Time
-	Slug    string
-	Excerpt string
-	Content template.HTML
+	Title       string
+	Date        string
+	RawDate     time.Time
+	Slug        string
+	Excerpt     string
+	Content     template.HTML
+	ReadingTime string
 }
 
 type RSSFeed struct {
@@ -430,6 +431,11 @@ func parseBlogPost(filePath, slug string) (BlogPost, error) {
 	}
 
 	post.Content = template.HTML(buf.String())
+
+	wordCount := len(strings.Fields(markdown))
+	readingMinutes := max(wordCount/200, 1)
+	post.ReadingTime = fmt.Sprintf("%d min read", readingMinutes)
+
 	return post, nil
 }
 
