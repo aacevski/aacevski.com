@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"aacevski.com/handlers"
+	"andrej.sh/handlers"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 )

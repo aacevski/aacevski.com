@@ -12,8 +12,8 @@
 
 1. clone the repository
 ```bash
-git clone https://github.com/aacevski/aacevski.com.git
-cd aacevski.com
+git clone https://github.com/aacevski/andrej.sh.git
+cd andrej.sh
 ```
 
 2. install dependencies

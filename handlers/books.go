@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"aacevski.com/pkg/koreader"
+	"andrej.sh/pkg/koreader"
 	"github.com/joho/godotenv"
 )
 

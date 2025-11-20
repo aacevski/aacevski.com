@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://aacevski.com/rss.xml
+Sitemap: https://andrej.sh/rss.xml
 

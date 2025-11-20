@@ -12,8 +12,8 @@ import (
 	"strings"
 	"time"
 
-	"aacevski.com/pkg/github"
-	"aacevski.com/pkg/koreader"
+	"andrej.sh/pkg/github"
+	"andrej.sh/pkg/koreader"
 	"github.com/alecthomas/chroma/v2/formatters/html"
 	"github.com/joho/godotenv"
 	"github.com/yuin/goldmark"
@@ -288,10 +288,10 @@ func buildRSSFeed(posts []BlogPost, outputDir string) error {
 	for _, post := range posts {
 		items = append(items, Item{
 			Title:       post.Title,
-			Link:        "https://aacevski.com/blog/" + post.Slug,
+			Link:        "https://andrej.sh/blog/" + post.Slug,
 			Description: post.Excerpt,
 			PubDate:     post.RawDate.Format(time.RFC1123Z),
-			GUID:        "https://aacevski.com/blog/" + post.Slug,
+			GUID:        "https://andrej.sh/blog/" + post.Slug,
 		})
 	}
 
@@ -305,11 +305,11 @@ func buildRSSFeed(posts []BlogPost, outputDir string) error {
 		AtomNS:  "http://www.w3.org/2005/Atom",
 		Channel: Channel{
 			Title:       "Andrej Acevski",
-			Link:        "https://aacevski.com",
+			Link:        "https://andrej.sh",
 			Description: "breaking code, building tools. software engineer writing about go, typescript, and making things that work.",
 			Language:    "en-us",
 			AtomLink: AtomLink{
-				Href: "https://aacevski.com/rss.xml",
+				Href: "https://andrej.sh/rss.xml",
 				Rel:  "self",
 				Type: "application/rss+xml",
 			},
@@ -524,9 +524,9 @@ func getHomeData(readingStats *koreader.ReadingStats) HomeData {
 				URL:         "https://github.com/usekaneo/drim",
 			},
 			{
-				Name:        "aacevski.com",
+				Name:        "andrej.sh",
 				Description: "this website. minimal portfolio built with go templates and astro. no unnecessary javascript. fast and clean.",
-				URL:         "https://github.com/aacevski/aacevski.com",
+				URL:         "https://github.com/aacevski/andrej.sh",
 			},
 		},
 		ReadingStats:  readingStats,

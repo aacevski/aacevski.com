@@ -4,9 +4,9 @@ import (
 	"html/template"
 	"net/http"
 
-	"aacevski.com/pkg/github"
-	"aacevski.com/pkg/koreader"
-	"aacevski.com/pkg/utils"
+	"andrej.sh/pkg/github"
+	"andrej.sh/pkg/koreader"
+	"andrej.sh/pkg/utils"
 )
 
 type HomeData struct {
@@ -108,9 +108,9 @@ func Home(w http.ResponseWriter, r *http.Request, templates *template.Template) 
 				URL:         "https://github.com/usekaneo/drim",
 			},
 			{
-				Name:        "aacevski.com",
+				Name:        "andrej.sh",
 				Description: "this website. minimal portfolio built with go templates and astro. no unnecessary javascript. fast and clean.",
-				URL:         "https://github.com/aacevski/aacevski.com",
+				URL:         "https://github.com/aacevski/andrej.sh",
 			},
 		},
 		ReadingStats: &koreader.ReadingStats{

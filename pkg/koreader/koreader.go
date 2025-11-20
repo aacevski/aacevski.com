@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"aacevski.com/pkg/utils"
+	"andrej.sh/pkg/utils"
 	"github.com/studio-b12/gowebdav"
 	_ "modernc.org/sqlite"
 )
