@@ -7,7 +7,7 @@ deploy:
 	@go run cmd/deploy/main.go
 
 dev:
-	@air
+	@$(shell go env GOPATH)/bin/air
 
 clean:
 	@rm -rf dist/
