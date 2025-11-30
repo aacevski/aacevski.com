@@ -237,9 +237,25 @@ func main() {
 		log.Fatal(err)
 	}
 
-	if err := copyFile("static/favicon.svg", filepath.Join(outputDir, "static/favicon.svg")); err != nil {
-		log.Fatal(err)
+	// Copy favicon files
+	faviconFiles := []string{
+		"favicon.svg",
+		"favicon.ico",
+		"favicon-16x16.png",
+		"favicon-32x32.png",
+		"favicon-192x192.png",
+		"favicon-512x512.png",
+		"apple-touch-icon.png",
+		"site.webmanifest",
 	}
+	for _, file := range faviconFiles {
+		src := filepath.Join("static", file)
+		dst := filepath.Join(outputDir, "static", file)
+		if err := copyFile(src, dst); err != nil {
+			log.Printf("Warning: Failed to copy %s: %v", file, err)
+		}
+	}
+
 	if err := copyFile("static/og-image.png", filepath.Join(outputDir, "static/og-image.png")); err != nil {
 		log.Fatal(err)
 	}
@@ -262,6 +278,16 @@ func main() {
 /*.svg
   Cache-Control: public, max-age=31536000, immutable
 
+/*.png
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.ico
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.webmanifest
+  Content-Type: application/manifest+json
+  Cache-Control: public, max-age=86400
+
 /*.woff2
   Cache-Control: public, max-age=31536000, immutable
   Access-Control-Allow-Origin: *
@@ -280,7 +306,7 @@ func main() {
 	log.Println("  • blog/index.html (blog listing)")
 	log.Println("  • rss.xml (RSS feed)")
 	log.Println("  • robots.txt")
-	log.Println("  • static/favicon.svg")
+	log.Println("  • static/favicons (svg, ico, png)")
 	log.Println("  • static/og-image.png")
 }
 

@@ -1,0 +1,22 @@
+{
+  "name": "Andrej Acevski",
+  "short_name": "aacevski",
+  "description": "Andrej Acevski - eng @ codechem. breaking code, building tools.",
+  "icons": [
+    {
+      "src": "/static/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#17191f",
+  "background_color": "#17191f",
+  "display": "standalone",
+  "start_url": "/"
+}
+
