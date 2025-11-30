@@ -1,6 +1,6 @@
 {
-  "name": "Andrej Acevski",
-  "short_name": "aacevski",
+  "name": "andrej's shell",
+  "short_name": "andrej's shell",
   "description": "Andrej Acevski - eng @ codechem. breaking code, building tools.",
   "icons": [
     {
@@ -19,4 +19,5 @@
   "display": "standalone",
   "start_url": "/"
 }
+
 
