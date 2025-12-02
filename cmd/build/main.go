@@ -94,6 +94,19 @@ type Item struct {
 	GUID        string `xml:"guid"`
 }
 
+type URLSet struct {
+	XMLName xml.Name `xml:"urlset"`
+	XMLNS   string   `xml:"xmlns,attr"`
+	URLs    []URL    `xml:"url"`
+}
+
+type URL struct {
+	Loc        string  `xml:"loc"`
+	LastMod    string  `xml:"lastmod,omitempty"`
+	ChangeFreq string  `xml:"changefreq,omitempty"`
+	Priority   float64 `xml:"priority,omitempty"`
+}
+
 func main() {
 	// Load .env file if it exists (ignore error if file doesn't exist)
 	if err := godotenv.Load(); err != nil {
@@ -300,11 +313,19 @@ func main() {
 		log.Fatal(err)
 	}
 
+	log.Println("Building sitemap...")
+	if err := buildSitemap(posts, outputDir); err != nil {
+		log.Printf("Warning: Failed to build sitemap: %v", err)
+	} else {
+		log.Println("✓ Built sitemap")
+	}
+
 	log.Println("✓ Static site built successfully in ./dist")
 	log.Println("  • index.html (home page)")
 	log.Println("  • books/index.html (books page)")
 	log.Println("  • blog/index.html (blog listing)")
 	log.Println("  • rss.xml (RSS feed)")
+	log.Println("  • sitemap.xml (sitemap)")
 	log.Println("  • robots.txt")
 	log.Println("  • static/favicons (svg, ico, png)")
 	log.Println("  • static/og-image.png")
@@ -358,6 +379,57 @@ func buildRSSFeed(posts []BlogPost, outputDir string) error {
 
 	rssFile.Write([]byte(xml.Header))
 	rssFile.Write(output)
+
+	return nil
+}
+
+func buildSitemap(posts []BlogPost, outputDir string) error {
+	urls := []URL{
+		{
+			Loc:        "https://andrej.sh/",
+			ChangeFreq: "weekly",
+			Priority:   1.0,
+		},
+		{
+			Loc:        "https://andrej.sh/blog",
+			ChangeFreq: "weekly",
+			Priority:   0.9,
+		},
+		{
+			Loc:        "https://andrej.sh/books",
+			ChangeFreq: "monthly",
+			Priority:   0.8,
+		},
+	}
+
+	// Add blog posts
+	for _, post := range posts {
+		urls = append(urls, URL{
+			Loc:        "https://andrej.sh/blog/" + post.Slug,
+			LastMod:    post.RawDate.Format("2006-01-02"),
+			ChangeFreq: "monthly",
+			Priority:   0.7,
+		})
+	}
+
+	sitemap := URLSet{
+		XMLNS: "http://www.sitemaps.org/schemas/sitemap/0.9",
+		URLs:  urls,
+	}
+
+	output, err := xml.MarshalIndent(sitemap, "", "  ")
+	if err != nil {
+		return err
+	}
+
+	sitemapFile, err := os.Create(filepath.Join(outputDir, "sitemap.xml"))
+	if err != nil {
+		return err
+	}
+	defer sitemapFile.Close()
+
+	sitemapFile.Write([]byte(xml.Header))
+	sitemapFile.Write(output)
 
 	return nil
 }

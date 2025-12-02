@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://andrej.sh/rss.xml
+Sitemap: https://andrej.sh/sitemap.xml
 

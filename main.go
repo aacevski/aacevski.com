@@ -44,6 +44,9 @@ func main() {
 	router.HandleFunc("/rss", func(w http.ResponseWriter, r *http.Request) {
 		handlers.RSS(w, r)
 	}).Methods("GET")
+	router.HandleFunc("/sitemap.xml", func(w http.ResponseWriter, r *http.Request) {
+		handlers.Sitemap(w, r)
+	}).Methods("GET")
 
 	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir(dir))))
 
